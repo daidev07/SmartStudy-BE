@@ -1,6 +1,7 @@
 package com.project.smartstudybejava.service.impl;
 
 import com.project.smartstudybejava.dto.reqDTO.ChatRequestDTO;
+import com.project.smartstudybejava.model.TenseModel;
 import com.project.smartstudybejava.service.Assistant;
 import com.project.smartstudybejava.service.GenAIService;
 import dev.langchain4j.data.message.ChatMessage;
@@ -24,6 +25,11 @@ public class GenAIServiceImpl implements GenAIService {
     @Override
     public String getChatResponse(ChatRequestDTO chatRequestDTO) {
         return assistant.chat(chatRequestDTO.userId(), chatRequestDTO.question());
+    }
+
+    @Override
+    public TenseModel getTenseModelFromText(String question) {
+        return assistant.extractTenseFromText(question);
     }
 
     public String getChatResponseSimple(ChatRequestDTO chatRequestDTO) {
