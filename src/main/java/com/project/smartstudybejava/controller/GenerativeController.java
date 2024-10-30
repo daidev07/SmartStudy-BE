@@ -18,6 +18,6 @@ public class GenerativeController  {
 
     @PostMapping
     public ChatResponseDTO getChatResponse(@RequestBody ChatRequestDTO chatRequestDTO) {
-        return genAIService.getChatResponse(chatRequestDTO);
+        return new ChatResponseDTO(genAIService.getChatResponse(chatRequestDTO));
     }
 }
