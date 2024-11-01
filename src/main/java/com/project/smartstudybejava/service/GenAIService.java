@@ -7,4 +7,6 @@ public interface GenAIService {
     String getChatResponse(ChatRequestDTO chatRequestDTO);
 
     TenseModel getTenseModelFromText(String question);
+
+    String getResponseExtended(ChatRequestDTO chatRequestDTO);
 }

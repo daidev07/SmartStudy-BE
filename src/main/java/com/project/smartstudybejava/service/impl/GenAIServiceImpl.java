@@ -4,12 +4,11 @@ import com.project.smartstudybejava.dto.reqDTO.ChatRequestDTO;
 import com.project.smartstudybejava.model.TenseModel;
 import com.project.smartstudybejava.service.Assistant;
 import com.project.smartstudybejava.service.GenAIService;
+import com.project.smartstudybejava.service.RAGAssistant;
 import dev.langchain4j.data.message.ChatMessage;
-import dev.langchain4j.data.message.SystemMessage;
 import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.openai.OpenAiChatModelName;
-import org.springframework.beans.factory.annotation.Value;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +20,7 @@ import java.util.List;
 public class GenAIServiceImpl implements GenAIService {
 
     private final Assistant assistant;
+    private final RAGAssistant ragAssistant;
 
     @Override
     public String getChatResponse(ChatRequestDTO chatRequestDTO) {
@@ -32,6 +32,12 @@ public class GenAIServiceImpl implements GenAIService {
         return assistant.extractTenseFromText(question);
     }
 
+    @Override
+    public String getResponseExtended(ChatRequestDTO chatRequestDTO) {
+
+        return ragAssistant.chat(chatRequestDTO.userId(), chatRequestDTO.question());
+    }
+
     public String getChatResponseSimple(ChatRequestDTO chatRequestDTO) {
 
         List<ChatMessage> messages = new ArrayList<>();
@@ -39,7 +45,7 @@ public class GenAIServiceImpl implements GenAIService {
 
         var model = OpenAiChatModel.builder()
                 .apiKey("demo")
-                .modelName(OpenAiChatModelName.GPT_4_O_MINI)
+                .modelName(OpenAiChatModelName.GPT_3_5_TURBO)
                 .build();
 
         return model.generate(messages).content().text();
