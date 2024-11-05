@@ -24,14 +24,15 @@ public class User {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     Long id;
     String name;
+    @Column(unique = true)
     String email;
     String avatarUrl;
     String phone;
+    @Column(unique = true)
     String username;
     String password;
     @ManyToOne
     Classroom classroom;
-
     @JsonFormat(pattern = "dd-MM-yyyy")
     LocalDate dob;
     @Enumerated

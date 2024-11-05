@@ -1,6 +1,6 @@
 package com.project.smartstudybejava.service.impl;
 
-import com.project.smartstudybejava.dto.reqDTO.ChatRequestDTO;
+import com.project.smartstudybejava.dto.req.ChatRequestDTO;
 import com.project.smartstudybejava.model.TenseModel;
 import com.project.smartstudybejava.service.Assistant;
 import com.project.smartstudybejava.service.GenAIService;

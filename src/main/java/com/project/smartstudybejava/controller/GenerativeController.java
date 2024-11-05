@@ -1,7 +1,7 @@
 package com.project.smartstudybejava.controller;
 
-import com.project.smartstudybejava.dto.reqDTO.ChatRequestDTO;
-import com.project.smartstudybejava.dto.resDTO.ChatResponseDTO;
+import com.project.smartstudybejava.dto.req.ChatRequestDTO;
+import com.project.smartstudybejava.dto.res.ChatResponseDTO;
 import com.project.smartstudybejava.model.TenseModel;
 import com.project.smartstudybejava.service.GenAIService;
 import lombok.RequiredArgsConstructor;
