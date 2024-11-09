@@ -9,7 +9,10 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @Getter
 public enum SuccessCode {
-    CREATED(201, "Success Created" , HttpStatus.CREATED);
+    CREATED(201, "Success Created" , HttpStatus.CREATED),
+    GET_SUCCESSFUL(200, "Get Successful" , HttpStatus.OK),
+
+    ;
 
     int code;
     String message;

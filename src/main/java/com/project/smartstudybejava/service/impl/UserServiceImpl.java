@@ -4,20 +4,22 @@ import com.project.smartstudybejava.dto.req.UserCreationReqDTO;
 import com.project.smartstudybejava.dto.res.UserResDTO;
 import com.project.smartstudybejava.entity.Classroom;
 import com.project.smartstudybejava.entity.User;
+import com.project.smartstudybejava.exception.BadRequestException;
 import com.project.smartstudybejava.exception.ResourceNotFoundException;
 import com.project.smartstudybejava.mapper.UserMapper;
 import com.project.smartstudybejava.repository.ClassroomRepository;
 import com.project.smartstudybejava.repository.UserRepository;
 import com.project.smartstudybejava.service.UserService;
+import com.project.smartstudybejava.util.ErrorCode;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -42,7 +44,16 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode((user.getPassword())));
         user.setCreatedAt(LocalDateTime.now());
 
-        User savedUser = userRepository.save(user);
-        return userMapper.toUserResponse(savedUser);
+        try {
+            user = userRepository.save(user);
+        } catch (Exception e) {
+            throw new BadRequestException(400, ErrorCode.USER_EXISTED.getMessage());
+        }
+        return userMapper.toUserResponse(user);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }

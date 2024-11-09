@@ -1,18 +1,17 @@
 package com.project.smartstudybejava.controller;
 
 import com.project.smartstudybejava.dto.req.UserCreationReqDTO;
+import com.project.smartstudybejava.dto.res.UserResDTO;
+import com.project.smartstudybejava.entity.User;
 import com.project.smartstudybejava.service.UserService;
 import com.project.smartstudybejava.util.ResponseData;
 import com.project.smartstudybejava.util.SuccessCode;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -22,13 +21,18 @@ public class UserController {
     UserService userService;
 
     @PostMapping
-    public ResponseEntity<ResponseData<?>> createUser(@RequestBody UserCreationReqDTO userCreationReqDTO) {
-        return ResponseEntity.ok(
-                ResponseData.builder()
-                        .code(SuccessCode.CREATED.getCode())
-                        .message(SuccessCode.CREATED.getMessage())
-                        .data(userService.createUser(userCreationReqDTO))
-                        .build());
+    public ResponseData<UserResDTO> createUser(@RequestBody UserCreationReqDTO userCreationReqDTO) {
+        return ResponseData.<UserResDTO>builder()
+                .message(SuccessCode.CREATED.getMessage())
+                .data(userService.createUser(userCreationReqDTO))
+                .build();
+    }
+    @GetMapping
+    public ResponseData<List<User>> getAllUsers() {
+        return ResponseData.<List<User>>builder()
+                .message(SuccessCode.GET_SUCCESSFUL.getMessage())
+                .data(userService.getAllUsers())
+                .build();
     }
 
 }
