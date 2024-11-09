@@ -11,6 +11,7 @@ import lombok.experimental.FieldDefaults;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -38,8 +39,8 @@ public class User {
     @Enumerated
     EStudyStatus studyStatus;
 
-    String createdAt;
-    String updatedAt;
+    LocalDateTime createdAt;
+    LocalDateTime updatedAt;
     String verificationCode;
     String resetPasswordCode;
     String resetPasswordExpiry;

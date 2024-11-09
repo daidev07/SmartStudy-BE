@@ -1,13 +1,13 @@
 CREATE DATABASE IF NOT EXISTS smart_study;
 USE smart_study;
 
-
 CREATE TABLE levels
 (
     id   BIGINT AUTO_INCREMENT NOT NULL,
     name VARCHAR(255)          NULL,
     CONSTRAINT pk_levels PRIMARY KEY (id)
 );
+
 CREATE TABLE classrooms
 (
     id       BIGINT AUTO_INCREMENT NOT NULL,
@@ -31,13 +31,19 @@ CREATE TABLE users
     classroom_id          BIGINT                NULL,
     dob                   date                  NULL,
     study_status          TINYINT               NULL,
-    created_at            VARCHAR(255)          NULL,
-    updated_at            VARCHAR(255)          NULL,
+    created_at            datetime              NULL,
+    updated_at            datetime              NULL,
     verification_code     VARCHAR(255)          NULL,
     reset_password_code   VARCHAR(255)          NULL,
     reset_password_expiry VARCHAR(255)          NULL,
     CONSTRAINT pk_users PRIMARY KEY (id)
 );
+
+ALTER TABLE users
+    ADD CONSTRAINT uc_users_email UNIQUE (email);
+
+ALTER TABLE users
+    ADD CONSTRAINT uc_users_username UNIQUE (username);
 
 ALTER TABLE users
     ADD CONSTRAINT FK_USERS_ON_CLASSROOM FOREIGN KEY (classroom_id) REFERENCES classrooms (id);

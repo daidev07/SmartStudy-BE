@@ -2,8 +2,10 @@ package com.project.smartstudybejava.dto.req;
 
 
 import com.project.smartstudybejava.entity.Classroom;
+import com.project.smartstudybejava.enumeration.EStudyStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
 
 @Data
 @NoArgsConstructor
@@ -17,4 +19,5 @@ public class UserCreationReqDTO {
     String username;
     String password;
     String classroomId;
+    EStudyStatus studyStatus;
 }

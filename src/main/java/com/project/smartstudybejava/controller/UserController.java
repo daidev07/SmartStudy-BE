@@ -6,6 +6,7 @@ import com.project.smartstudybejava.util.ResponseData;
 import com.project.smartstudybejava.util.SuccessCode;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
