@@ -2,10 +2,13 @@ package com.project.smartstudybejava.service.impl;
 
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
+import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.SignedJWT;
 import com.project.smartstudybejava.dto.req.AuthenticationRequest;
+import com.project.smartstudybejava.dto.req.IntrospectRequest;
 import com.project.smartstudybejava.dto.res.AuthenticationResponse;
-import com.project.smartstudybejava.exception.AppException;
+import com.project.smartstudybejava.dto.res.IntrospectResponse;
 import com.project.smartstudybejava.exception.BadRequestException;
 import com.project.smartstudybejava.repository.UserRepository;
 import com.project.smartstudybejava.service.AuthenticationService;
@@ -19,6 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -43,7 +47,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         boolean authenticated =  passwordEncoder.matches(request.getPassword(), user.getPassword());
 
         if (!authenticated) {
-            throw new AppException(ErrorCode.UNAUTHENTICATED);
+            throw new BadRequestException(ErrorCode.UNAUTHENTICATED.getCode(), ErrorCode.UNAUTHENTICATED.getMessage());
         }
         var token = generateToken(request.getUsername());
         return AuthenticationResponse.builder()
@@ -74,5 +78,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             log.error("Error signing token", e);
             throw new RuntimeException(e);
         }
+    }
+
+    public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
+        var token = request.getToken();
+        JWSVerifier verifier = new MACVerifier(signerKey.getBytes());
+        SignedJWT signedJWT = SignedJWT.parse(token);
+
+        Date expirationTime = signedJWT.getJWTClaimsSet().getExpirationTime();
+
+        var verified = signedJWT.verify(verifier);
+
+        return IntrospectResponse.builder()
+                .validToken(verified && expirationTime.after(new Date()))
+                .build();
     }
 }
