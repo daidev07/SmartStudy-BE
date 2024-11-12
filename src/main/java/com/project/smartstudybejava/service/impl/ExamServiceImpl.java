@@ -7,6 +7,9 @@ import com.project.smartstudybejava.repository.AnswerRepository;
 import com.project.smartstudybejava.repository.ExamRepository;
 import com.project.smartstudybejava.repository.QuestionRepository;
 import com.project.smartstudybejava.service.ExamService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -19,6 +22,8 @@ import java.io.InputStream;
 import java.util.Iterator;
 
 @Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ExamServiceImpl implements ExamService {
 
     ExamRepository examRepository;
@@ -39,14 +44,8 @@ public class ExamServiceImpl implements ExamService {
         InputStream inputStream = file.getInputStream();
         Workbook workbook = new XSSFWorkbook(inputStream);
         Sheet sheet = workbook.getSheetAt(0);
-        Iterator<Row> rowIterator = sheet.iterator();
 
-        // Bỏ qua dòng tiêu đề
-        if (rowIterator.hasNext()) rowIterator.next();
-
-        while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-
+        for (Row row : sheet) {
             // Đọc dữ liệu từ các cột
             String questionContent = row.getCell(0).getStringCellValue();
             String answer1 = row.getCell(1).getStringCellValue();
