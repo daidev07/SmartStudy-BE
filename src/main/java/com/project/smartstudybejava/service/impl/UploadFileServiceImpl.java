@@ -1,7 +1,9 @@
 package com.project.smartstudybejava.service.impl;
 
 import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.project.smartstudybejava.entity.FileInfo;
+import com.project.smartstudybejava.entity.Exam;
 import com.project.smartstudybejava.repository.FileInfoRepository;
 import com.project.smartstudybejava.service.UploadFileService;
 import com.project.smartstudybejava.util.FileUploadUtil;

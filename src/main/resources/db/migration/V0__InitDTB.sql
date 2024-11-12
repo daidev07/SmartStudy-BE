@@ -58,3 +58,54 @@ CREATE TABLE files
     cloud_id    VARCHAR(255) NULL,
     CONSTRAINT pk_fileinfo PRIMARY KEY (id)
 );
+
+CREATE TABLE roles
+(
+    id   BIGINT AUTO_INCREMENT NOT NULL,
+    name VARCHAR(255)          NULL,
+    CONSTRAINT pk_roles PRIMARY KEY (id)
+);
+CREATE TABLE user_roles
+(
+    id      BIGINT AUTO_INCREMENT NOT NULL,
+    user_id BIGINT                NULL,
+    role_id BIGINT                NULL,
+    CONSTRAINT pk_user_roles PRIMARY KEY (id)
+);
+
+ALTER TABLE user_roles
+    ADD CONSTRAINT FK_USER_ROLES_ON_ROLE FOREIGN KEY (role_id) REFERENCES roles (id);
+
+ALTER TABLE user_roles
+    ADD CONSTRAINT FK_USER_ROLES_ON_USER FOREIGN KEY (user_id) REFERENCES users (id);
+
+CREATE TABLE exams
+(
+    id         BIGINT AUTO_INCREMENT NOT NULL,
+    name       VARCHAR(255)          NULL,
+    created_at date                  NULL,
+    CONSTRAINT pk_exams PRIMARY KEY (id)
+);
+
+CREATE TABLE questions
+(
+    id      BIGINT AUTO_INCREMENT NOT NULL,
+    exam_id BIGINT                NULL,
+    content VARCHAR(255)          NULL,
+    CONSTRAINT pk_questions PRIMARY KEY (id)
+);
+
+ALTER TABLE questions
+    ADD CONSTRAINT FK_QUESTIONS_ON_EXAM FOREIGN KEY (exam_id) REFERENCES exams (id);
+
+CREATE TABLE answers
+(
+    id          BIGINT AUTO_INCREMENT NOT NULL,
+    question_id BIGINT                NULL,
+    content     VARCHAR(255)          NULL,
+    is_correct  BIT(1)                NULL,
+    CONSTRAINT pk_answers PRIMARY KEY (id)
+);
+
+ALTER TABLE answers
+    ADD CONSTRAINT FK_ANSWERS_ON_QUESTION FOREIGN KEY (question_id) REFERENCES questions (id);

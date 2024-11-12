@@ -62,7 +62,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .subject(username)
                 .issuer("smartstudy.com")
                 .issueTime(new Date())
-                .claim("userId", "Custom claim")
+                .claim("userName", username)
                 .expirationTime(new Date(
                         Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()
                 ))
