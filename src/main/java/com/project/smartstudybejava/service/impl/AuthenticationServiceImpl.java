@@ -9,7 +9,7 @@ import com.project.smartstudybejava.dto.req.AuthenticationRequest;
 import com.project.smartstudybejava.dto.req.IntrospectRequest;
 import com.project.smartstudybejava.dto.res.AuthenticationResponse;
 import com.project.smartstudybejava.dto.res.IntrospectResponse;
-import com.project.smartstudybejava.exception.BadRequestException;
+import com.project.smartstudybejava.exception.AppException;
 import com.project.smartstudybejava.repository.UserRepository;
 import com.project.smartstudybejava.service.AuthenticationService;
 import com.project.smartstudybejava.util.ErrorCode;
@@ -41,13 +41,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         var user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new BadRequestException(ErrorCode.USER_NOT_FOUND.getCode(),
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND.getCode(),
                                                             ErrorCode.USER_NOT_FOUND.getMessage()));
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         boolean authenticated =  passwordEncoder.matches(request.getPassword(), user.getPassword());
 
         if (!authenticated) {
-            throw new BadRequestException(ErrorCode.UNAUTHENTICATED.getCode(), ErrorCode.UNAUTHENTICATED.getMessage());
+            throw new AppException(ErrorCode.UNAUTHENTICATED.getCode(), ErrorCode.UNAUTHENTICATED.getMessage());
         }
         var token = generateToken(request.getUsername());
         return AuthenticationResponse.builder()

@@ -19,6 +19,9 @@ public enum ErrorCode {
     CLASSROOM_NOT_FOUND(404, "Classroom not found", HttpStatus.NOT_FOUND),
     CLASSROOM_EXISTED(400, "Classroom existed", HttpStatus.BAD_REQUEST),
 
+    EXAM_EXISTED(400, "Exam existed", HttpStatus.BAD_REQUEST),
+    EXAM_NOT_FOUND(404, "Exam not found", HttpStatus.NOT_FOUND),
+
     UNAUTHENTICATED(400, "Unauthenticated", HttpStatus.UNAUTHORIZED),
 
     ;

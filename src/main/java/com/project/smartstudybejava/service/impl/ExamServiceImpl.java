@@ -3,10 +3,12 @@ package com.project.smartstudybejava.service.impl;
 import com.project.smartstudybejava.entity.Answer;
 import com.project.smartstudybejava.entity.Exam;
 import com.project.smartstudybejava.entity.Question;
+import com.project.smartstudybejava.exception.AppException;
 import com.project.smartstudybejava.repository.AnswerRepository;
 import com.project.smartstudybejava.repository.ExamRepository;
 import com.project.smartstudybejava.repository.QuestionRepository;
 import com.project.smartstudybejava.service.ExamService;
+import com.project.smartstudybejava.util.ErrorCode;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -19,7 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Iterator;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -30,14 +33,23 @@ public class ExamServiceImpl implements ExamService {
     QuestionRepository questionRepository;
     AnswerRepository answerRepository;
 
-    public void createExamWithQuestions(String examName, MultipartFile file) throws IOException {
-        // Tạo đề thi mới
-        Exam exam = new Exam();
-        exam.setName(examName);  // Đặt tên cho đề thi
-        exam = examRepository.save(exam);  // Lưu đề thi vào CSDL
+    public void createExamWithQuestions(String examName, MultipartFile examFile) throws IOException {
 
-        // Đọc và import câu hỏi từ file Excel
-        importQuestionsFromExcel(exam, file);
+        if(examRepository.existsByName(examName)) {
+            throw new AppException(ErrorCode.EXAM_EXISTED.getCode(), ErrorCode.EXAM_EXISTED.getMessage());
+        }
+
+        Exam exam = new Exam();
+        exam.setName(examName);
+        exam.setCreatedAt(LocalDateTime.now());
+        exam = examRepository.save(exam);
+
+        importQuestionsFromExcel(exam, examFile);
+    }
+
+    @Override
+    public List<Exam> getAllExams() {
+        return examRepository.findAll();
     }
 
     private void importQuestionsFromExcel(Exam exam, MultipartFile file) throws IOException {
@@ -54,13 +66,11 @@ public class ExamServiceImpl implements ExamService {
             String answer4 = row.getCell(4).getStringCellValue();
             int correctAnswerIndex = (int) row.getCell(5).getNumericCellValue();
 
-            // Tạo câu hỏi
             Question question = new Question();
             question.setContent(questionContent);
             question.setExam(exam);
             questionRepository.save(question);
 
-            // Tạo các câu trả lời
             createAnswer(answer1, correctAnswerIndex == 1, question);
             createAnswer(answer2, correctAnswerIndex == 2, question);
             createAnswer(answer3, correctAnswerIndex == 3, question);

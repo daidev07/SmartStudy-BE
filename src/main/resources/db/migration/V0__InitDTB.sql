@@ -83,7 +83,7 @@ CREATE TABLE exams
 (
     id         BIGINT AUTO_INCREMENT NOT NULL,
     name       VARCHAR(255)          NULL,
-    created_at date                  NULL,
+    created_at datetime              NULL,
     CONSTRAINT pk_exams PRIMARY KEY (id)
 );
 

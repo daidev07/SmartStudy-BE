@@ -4,7 +4,7 @@ import com.project.smartstudybejava.dto.req.UserCreationReqDTO;
 import com.project.smartstudybejava.dto.res.UserResDTO;
 import com.project.smartstudybejava.entity.Classroom;
 import com.project.smartstudybejava.entity.User;
-import com.project.smartstudybejava.exception.BadRequestException;
+import com.project.smartstudybejava.exception.AppException;
 import com.project.smartstudybejava.exception.ResourceNotFoundException;
 import com.project.smartstudybejava.mapper.UserMapper;
 import com.project.smartstudybejava.repository.ClassroomRepository;
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
         try {
             user = userRepository.save(user);
         } catch (Exception e) {
-            throw new BadRequestException(400, ErrorCode.USER_EXISTED.getMessage());
+            throw new AppException(400, ErrorCode.USER_EXISTED.getMessage());
         }
         return userMapper.toUserResponse(user);
     }

@@ -1,16 +1,17 @@
 package com.project.smartstudybejava.controller;
 
+import com.project.smartstudybejava.entity.Exam;
 import com.project.smartstudybejava.service.ExamService;
+import com.project.smartstudybejava.util.ResponseData;
+import com.project.smartstudybejava.util.SuccessCode;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,14 +21,20 @@ public class ExamController {
     ExamService examService;
 
     @PostMapping("/create")
-    public ResponseEntity<String> createExamWithQuestions(@RequestParam("name") String name,
-                                                          @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> createExamWithQuestions(@RequestParam("examName") String examName,
+                                                          @RequestParam("examFile") MultipartFile examFile) {
         try {
-            examService.createExamWithQuestions(name, file);
+            examService.createExamWithQuestions(examName, examFile);
             return ResponseEntity.ok("Tạo đề thi và import câu hỏi thành công!");
         } catch (IOException e) {
             return ResponseEntity.status(500).body("Lỗi khi import file: " + e.getMessage());
         }
     }
-
+    @GetMapping
+    public ResponseData<List<Exam>> getAllExams() {
+        return ResponseData.<List<Exam>>builder()
+                .message(SuccessCode.GET_SUCCESSFUL.getMessage())
+                .data(examService.getAllExams())
+                .build();
+    }
 }

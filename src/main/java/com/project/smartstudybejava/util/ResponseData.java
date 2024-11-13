@@ -13,7 +13,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class ResponseData<T> {
     @Builder.Default
-    int code = 1000;
+    int code = 200;
     String message;
     T data;
 }

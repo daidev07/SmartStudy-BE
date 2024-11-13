@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<ResponseData<Void>> handleBadRequestException(BadRequestException ex) {
+    @ExceptionHandler(AppException.class)
+    public ResponseEntity<ResponseData<Void>> handleBadRequestException(AppException ex) {
         ResponseData<Void> responseData = ResponseData.<Void>builder()
                 .code(ex.getCode())
                 .message(ex.getMessage())
