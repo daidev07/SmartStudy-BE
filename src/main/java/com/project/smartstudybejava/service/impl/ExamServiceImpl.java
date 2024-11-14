@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class ExamServiceImpl implements ExamService {
 
         Exam exam = new Exam();
         exam.setName(examName);
-        exam.setCreatedAt(LocalDateTime.now());
+        exam.setCreatedAt(LocalDate.now());
         exam = examRepository.save(exam);
 
         importQuestionsFromExcel(exam, examFile);
