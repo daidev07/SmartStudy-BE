@@ -109,3 +109,38 @@ CREATE TABLE answers
 
 ALTER TABLE answers
     ADD CONSTRAINT FK_ANSWERS_ON_QUESTION FOREIGN KEY (question_id) REFERENCES questions (id);
+
+CREATE TABLE classroom_assignments
+(
+    id            BIGINT AUTO_INCREMENT NOT NULL,
+    name          VARCHAR(255)          NULL,
+    exam_id       BIGINT                NULL,
+    classroom_id  BIGINT                NULL,
+    `description` VARCHAR(255)          NULL,
+    created_at    datetime              NULL,
+    CONSTRAINT pk_classroom_assignments PRIMARY KEY (id)
+);
+
+ALTER TABLE classroom_assignments
+    ADD CONSTRAINT FK_CLASSROOM_ASSIGNMENTS_ON_CLASSROOM FOREIGN KEY (classroom_id) REFERENCES classrooms (id);
+
+ALTER TABLE classroom_assignments
+    ADD CONSTRAINT FK_CLASSROOM_ASSIGNMENTS_ON_EXAM FOREIGN KEY (exam_id) REFERENCES exams (id);
+
+CREATE TABLE student_assignments
+(
+    id                BIGINT AUTO_INCREMENT NOT NULL,
+    name              VARCHAR(255)          NULL,
+    exam_id           BIGINT                NULL,
+    user_id           BIGINT                NULL,
+    `description`     VARCHAR(255)          NULL,
+    created_at        datetime              NULL,
+    assignment_status TINYINT              NULL,
+    CONSTRAINT pk_student_assignments PRIMARY KEY (id)
+);
+
+ALTER TABLE student_assignments
+    ADD CONSTRAINT FK_STUDENT_ASSIGNMENTS_ON_EXAM FOREIGN KEY (exam_id) REFERENCES exams (id);
+
+ALTER TABLE student_assignments
+    ADD CONSTRAINT FK_STUDENT_ASSIGNMENTS_ON_USER FOREIGN KEY (user_id) REFERENCES users (id);

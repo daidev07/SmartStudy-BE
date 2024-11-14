@@ -12,6 +12,7 @@ public enum SuccessCode {
     CREATED(201, "Success Created" , HttpStatus.CREATED),
     GET_SUCCESSFUL(200, "Get Successful" , HttpStatus.OK),
 
+    ASSIGN_SUCCESSFUL(201, "Assignment to classroom successful" , HttpStatus.CREATED),
     ;
 
     int code;
