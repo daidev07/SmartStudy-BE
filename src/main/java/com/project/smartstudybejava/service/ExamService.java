@@ -1,5 +1,6 @@
 package com.project.smartstudybejava.service;
 
+import com.project.smartstudybejava.dto.res.ExamResponse;
 import com.project.smartstudybejava.entity.Exam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,4 +11,6 @@ public interface ExamService {
     void createExamWithQuestions(String examName, MultipartFile examFile) throws IOException;
 
     List<Exam> getAllExams();
+
+    ExamResponse getExamByExamId(Long examId);
 }

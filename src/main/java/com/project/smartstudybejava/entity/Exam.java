@@ -1,9 +1,6 @@
 package com.project.smartstudybejava.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -26,4 +24,6 @@ public class Exam {
     Long id;
     String name;
     LocalDate createdAt;
+    @OneToMany(mappedBy = "exam")
+    private List<Question> questions;
 }

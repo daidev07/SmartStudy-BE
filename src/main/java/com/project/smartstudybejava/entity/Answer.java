@@ -17,6 +17,7 @@ public class Answer {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     Long id;
     @ManyToOne
+    @JoinColumn(name = "question_id")
     Question question;
     String content;
     Boolean isCorrect;

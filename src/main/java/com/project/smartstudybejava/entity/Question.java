@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -19,6 +21,9 @@ public class Question {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     Long id;
     @ManyToOne
+    @JoinColumn(name = "exam_id")
     Exam exam;
     String content;
+    @OneToMany(mappedBy = "question")
+    private List<Answer> answers;
 }

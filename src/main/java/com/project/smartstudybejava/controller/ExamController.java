@@ -1,5 +1,6 @@
 package com.project.smartstudybejava.controller;
 
+import com.project.smartstudybejava.dto.res.ExamResponse;
 import com.project.smartstudybejava.entity.Exam;
 import com.project.smartstudybejava.service.ExamService;
 import com.project.smartstudybejava.util.ResponseData;
@@ -37,4 +38,13 @@ public class ExamController {
                 .data(examService.getAllExams())
                 .build();
     }
+
+    @GetMapping("/{examId}")
+    public ResponseData<ExamResponse> getExamsByExamId(@PathVariable Long examId) {
+        return ResponseData.<ExamResponse>builder()
+                .message(SuccessCode.GET_EXAM_SUCCESSFUL.getMessage())
+                .data(examService.getExamByExamId(examId))
+                .build();
+    }
+
 }
