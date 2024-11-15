@@ -22,6 +22,8 @@ public enum ErrorCode {
     EXAM_EXISTED(400, "Exam existed", HttpStatus.BAD_REQUEST),
     EXAM_NOT_FOUND(404, "Exam not found", HttpStatus.NOT_FOUND),
 
+    ASSIGNMENT_NOT_FOUND(404, "Assignment not found", HttpStatus.NOT_FOUND),
+
     UNAUTHENTICATED(400, "Unauthenticated", HttpStatus.UNAUTHORIZED),
 
     ;

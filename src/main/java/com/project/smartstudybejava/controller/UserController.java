@@ -10,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
+import retrofit2.http.Path;
 
 import java.util.List;
 
@@ -32,6 +33,13 @@ public class UserController {
         return ResponseData.<List<User>>builder()
                 .message(SuccessCode.GET_SUCCESSFUL.getMessage())
                 .data(userService.getAllUsers())
+                .build();
+    }
+    @GetMapping("/{userName}")
+    public ResponseData<User> getUserByUsername(@PathVariable String userName) {
+        return ResponseData.<User>builder()
+                .message(SuccessCode.GET_SUCCESSFUL.getMessage())
+                .data(userService.getUserByUsername(userName))
                 .build();
     }
 

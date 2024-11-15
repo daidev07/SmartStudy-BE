@@ -56,4 +56,11 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+    @Override
+    public User getUserByUsername(String userName) {
+        return userRepository.findByUsername(userName)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND.getCode(),
+                        ErrorCode.USER_NOT_FOUND.getMessage()));
+    }
 }

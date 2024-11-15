@@ -9,4 +9,6 @@ import java.util.List;
 public interface UserService {
     UserResDTO createUser(UserCreationReqDTO userCreationReqDTO);
     List<User> getAllUsers();
+
+    User getUserByUsername(String userName);
 }
