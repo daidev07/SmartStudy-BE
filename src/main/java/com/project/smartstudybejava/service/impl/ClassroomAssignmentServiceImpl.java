@@ -28,7 +28,8 @@ public class ClassroomAssignmentServiceImpl implements ClassroomAssignmentServic
     UserRepository userRepository;
 
     @Override
-    public ClassroomAssignment assignToClassroom(Long classroomId, Long examId, String title, String description) {
+    public ClassroomAssignment assignToClassroom(Long classroomId, Long examId, String title, String description
+                                                    , LocalDateTime dueDate) {
 
         Classroom classroom = classroomRepository.findById(classroomId).orElseThrow(() ->
                 new AppException(ErrorCode.CLASSROOM_NOT_FOUND.getCode(), ErrorCode.CLASSROOM_NOT_FOUND.getMessage()));
@@ -41,6 +42,8 @@ public class ClassroomAssignmentServiceImpl implements ClassroomAssignmentServic
         classroomAssignment.setName(title);
         classroomAssignment.setDescription(description);
         classroomAssignment.setCreatedAt(LocalDateTime.now());
+        classroomAssignment.setDueDate(dueDate);
+
 
         classroomAssignment = classroomAssignmentRepository.save(classroomAssignment);
 
@@ -52,6 +55,7 @@ public class ClassroomAssignmentServiceImpl implements ClassroomAssignmentServic
             studentAssignment.setName(title);
             studentAssignment.setDescription(description);
             studentAssignment.setCreatedAt(LocalDateTime.now());
+            studentAssignment.setDueDate(dueDate);
             studentAssignment.setAssignmentStatus(EAssignmentStatus.NOT_SUBMIT);
 
             studentAssignmentRepository.save(studentAssignment);

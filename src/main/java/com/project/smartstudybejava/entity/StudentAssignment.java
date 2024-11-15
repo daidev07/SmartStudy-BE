@@ -28,6 +28,7 @@ public class StudentAssignment {
     User user;
     String description;
     LocalDateTime createdAt;
+    LocalDateTime dueDate;
     @Enumerated
     EAssignmentStatus assignmentStatus;
 }

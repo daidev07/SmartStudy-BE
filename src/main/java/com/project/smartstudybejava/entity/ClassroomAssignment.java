@@ -27,4 +27,5 @@ public class ClassroomAssignment {
     Classroom classroom;
     String description;
     LocalDateTime createdAt;
+    LocalDateTime dueDate;
 }
