@@ -14,4 +14,5 @@ public class AssignmentRequest {
     String title;
     String description;
     LocalDateTime dueDate;
+    Long totalPoints = 0L;
 }

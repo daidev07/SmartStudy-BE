@@ -21,7 +21,7 @@ import java.util.List;
 public class ExamController {
     ExamService examService;
 
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseEntity<String> createExamWithQuestions(@RequestParam("examName") String examName,
                                                           @RequestParam("examFile") MultipartFile examFile) {
         try {

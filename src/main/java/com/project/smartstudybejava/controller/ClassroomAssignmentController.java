@@ -25,7 +25,8 @@ public class ClassroomAssignmentController {
         return ResponseData.<ClassroomAssignment>builder()
                 .message(SuccessCode.ASSIGN_SUCCESSFUL.getMessage())
                 .data(classroomAssignmentService.assignToClassroom(classroomId, examId,
-                        request.getTitle(), request.getDescription(), request.getDueDate()))
+                        request.getTitle(), request.getDescription(), request.getDueDate(),
+                        request.getTotalPoints()))
                 .build();
     }
 

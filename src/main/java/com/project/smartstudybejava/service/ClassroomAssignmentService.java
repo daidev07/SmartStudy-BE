@@ -6,5 +6,5 @@ import java.time.LocalDateTime;
 
 public interface ClassroomAssignmentService {
     ClassroomAssignment assignToClassroom(Long classroomId, Long examId, String title, String description
-                                                    , LocalDateTime dueDate);
+                                                    , LocalDateTime dueDate, Long totalPoints);
 }

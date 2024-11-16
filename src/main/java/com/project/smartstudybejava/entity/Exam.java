@@ -1,5 +1,6 @@
 package com.project.smartstudybejava.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,5 +26,6 @@ public class Exam {
     String name;
     LocalDate createdAt;
     @OneToMany(mappedBy = "exam")
+    @JsonIgnore
     private List<Question> questions;
 }

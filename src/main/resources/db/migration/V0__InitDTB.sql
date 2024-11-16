@@ -137,6 +137,7 @@ CREATE TABLE student_assignments
     `description`     VARCHAR(255)          NULL,
     created_at        datetime              NULL,
     due_date          datetime              NULL,
+    total_points      BIGINT                NULL,
     assignment_status TINYINT              NULL,
     CONSTRAINT pk_student_assignments PRIMARY KEY (id)
 );
