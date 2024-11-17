@@ -9,7 +9,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public enum EAssignmentStatus {
-    COMPLETED("Completed"),
+    SUBMITTED("Submitted"),
     LATE_SUBMISSION("Late Submission"),
     NOT_SUBMIT("Not Submit");
 

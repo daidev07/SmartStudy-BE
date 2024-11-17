@@ -54,7 +54,7 @@ public class AnswerResultServiceImpl implements AnswerResultService {
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND.getCode(),
                         ErrorCode.USER_NOT_FOUND.getMessage()));
         studentAssignment.setPoint(point);
-        studentAssignment.setAssignmentStatus(EAssignmentStatus.COMPLETED);
+        studentAssignment.setAssignmentStatus(EAssignmentStatus.SUBMITTED);
 
         studentAssignmentRepository.save(studentAssignment);
     }
