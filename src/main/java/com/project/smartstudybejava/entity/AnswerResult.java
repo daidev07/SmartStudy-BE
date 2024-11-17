@@ -20,6 +20,7 @@ public class AnswerResult {
     @ManyToOne
     Question question;
     @ManyToOne
+    @JoinColumn(name = "answer_id", nullable = true)
     Answer answer;
     @ManyToOne
     User user;
