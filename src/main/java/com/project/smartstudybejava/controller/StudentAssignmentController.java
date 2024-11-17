@@ -22,11 +22,18 @@ public class StudentAssignmentController {
 
     StudentAssignmentService studentAssignmentService;
 
-    @GetMapping("/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseData<List<StudentAssignment>> getAssignmentByUserId(@PathVariable Long userId) {
         return ResponseData.<List<StudentAssignment>>builder()
                 .message(SuccessCode.GET_ASSIGNMENT_SUCCESSFUL.getMessage())
                 .data(studentAssignmentService.getAssignmentByUserId(userId))
+                .build();
+    }
+    @GetMapping("/{assignmentId}")
+    public ResponseData<StudentAssignment> getAssignmentById(@PathVariable Long assignmentId) {
+        return ResponseData.<StudentAssignment>builder()
+                .message(SuccessCode.GET_ASSIGNMENT_SUCCESSFUL.getMessage())
+                .data(studentAssignmentService.getAssignmentById(assignmentId))
                 .build();
     }
 }

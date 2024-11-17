@@ -1,6 +1,7 @@
 package com.project.smartstudybejava.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.project.smartstudybejava.enumeration.EAssignmentStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,7 +25,7 @@ public class StudentAssignment {
     Long id;
     String name;
     @ManyToOne
-    @JsonIgnore
+    @JsonIgnoreProperties("exam")
     Exam exam;
     @ManyToOne
     User user;

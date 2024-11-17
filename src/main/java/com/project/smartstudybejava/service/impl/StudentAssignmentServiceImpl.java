@@ -28,4 +28,11 @@ public class StudentAssignmentServiceImpl implements StudentAssignmentService {
         }
         return studentAssignmentRepository.findByUserId(userId);
     }
+
+    @Override
+    public StudentAssignment getAssignmentById(Long assignmentId) {
+        return studentAssignmentRepository.findById(assignmentId)
+                .orElseThrow(() -> new AppException(ErrorCode.ASSIGNMENT_NOT_FOUND.getCode(),
+                        ErrorCode.ASSIGNMENT_NOT_FOUND.getMessage()));
+    }
 }
