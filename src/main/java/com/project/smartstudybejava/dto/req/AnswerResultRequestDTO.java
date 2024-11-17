@@ -1,4 +1,4 @@
-package com.project.smartstudybejava.dto.res;
+package com.project.smartstudybejava.dto.req;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -9,8 +9,9 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
-public class AnswerResponse {
-    Long id;
-    String content;
-    Boolean isCorrect;
+public class AnswerResultRequestDTO {
+    Long studentAssignmentId;
+    Long questionId;
+    Long answerId;
+    Long userId;
 }

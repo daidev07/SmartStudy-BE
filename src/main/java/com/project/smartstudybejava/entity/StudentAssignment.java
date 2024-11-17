@@ -31,7 +31,7 @@ public class StudentAssignment {
     String description;
     LocalDateTime createdAt;
     LocalDateTime dueDate;
-    Long totalPoints;
+    Long point;
     @Enumerated
     EAssignmentStatus assignmentStatus;
 }

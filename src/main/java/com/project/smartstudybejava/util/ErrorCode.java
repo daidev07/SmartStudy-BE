@@ -24,6 +24,10 @@ public enum ErrorCode {
 
     ASSIGNMENT_NOT_FOUND(404, "Assignment not found", HttpStatus.NOT_FOUND),
 
+    STUDENT_ASSIGNMENT_NOT_FOUND(404, "Student assignment not found", HttpStatus.NOT_FOUND),
+    QUESTION_NOT_FOUND(404, "Question not found", HttpStatus.NOT_FOUND),
+    ANSWER_NOT_FOUND(404, "Answer not found", HttpStatus.NOT_FOUND),
+
     UNAUTHENTICATED(400, "Unauthenticated", HttpStatus.UNAUTHORIZED),
 
     ;

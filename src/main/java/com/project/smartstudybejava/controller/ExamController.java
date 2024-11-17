@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE, makeFinal = true)
-@RequestMapping("/api/exams")
+@RequestMapping("/api/exam")
 public class ExamController {
     ExamService examService;
 
