@@ -30,6 +30,8 @@ public enum ErrorCode {
 
     UNAUTHENTICATED(400, "Unauthenticated", HttpStatus.UNAUTHORIZED),
 
+    HISTORY_CHATBOT_NOT_FOUND(404, "History chatbot not found", HttpStatus.NOT_FOUND),
+
     ;
     int code;
     String message;

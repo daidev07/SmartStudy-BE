@@ -9,7 +9,6 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -27,5 +26,5 @@ public class Exam {
     LocalDate createdAt;
     @OneToMany(mappedBy = "exam")
     @JsonIgnore
-    private List<Question> questions;
+    List<Question> questions;
 }

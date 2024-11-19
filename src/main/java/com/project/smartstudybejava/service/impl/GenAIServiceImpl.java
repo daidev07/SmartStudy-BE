@@ -89,4 +89,11 @@ public class GenAIServiceImpl implements GenAIService {
 
         return answerBot;
     }
+
+    @Override
+    public HistoryChatbot getHistoryChatbotByUserId(Long userId) {
+        return historyChatbotRepository.findByUserId(userId).orElseThrow(
+                () -> new AppException(ErrorCode.HISTORY_CHATBOT_NOT_FOUND.getCode(),
+                        ErrorCode.HISTORY_CHATBOT_NOT_FOUND.getMessage()));
+    }
 }

@@ -2,14 +2,14 @@ package com.project.smartstudybejava.controller;
 
 import com.project.smartstudybejava.dto.req.ChatRequestDTO;
 import com.project.smartstudybejava.dto.res.ChatResponseDTO;
+import com.project.smartstudybejava.entity.HistoryChatbot;
 import com.project.smartstudybejava.model.TenseModel;
 import com.project.smartstudybejava.service.GenAIService;
+import com.project.smartstudybejava.util.ResponseData;
+import com.project.smartstudybejava.util.SuccessCode;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,4 +32,12 @@ public class GenerativeController  {
 //    public TenseModel getTenseModelFromText(@RequestBody ChatRequestDTO chatRequestDTO) {
 //        return genAIService.getTenseModelFromText(chatRequestDTO.question());
 //    }
+
+    @GetMapping("/message-history/user/{userId}")
+    public ResponseData<HistoryChatbot> getHistoryChatbotByUserId(@PathVariable Long userId) {
+        return ResponseData.<HistoryChatbot>builder()
+                .message(SuccessCode.GET_SUCCESSFUL.getMessage())
+                .data(genAIService.getHistoryChatbotByUserId(userId))
+                .build();
+    }
 }
