@@ -2,11 +2,9 @@ package com.project.smartstudybejava.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.smartstudybejava.enumeration.EStudyStatus;
+import dev.langchain4j.data.message.ToolExecutionResultMessage;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 
@@ -18,6 +16,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "users")
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 public class User {

@@ -19,17 +19,17 @@ public class GenerativeController  {
 
     GenAIService genAIService;
 
-    @PostMapping
+    @PostMapping("/ask-ai")
     public ChatResponseDTO getChatResponse(@RequestBody ChatRequestDTO chatRequestDTO) {
-        return new ChatResponseDTO(genAIService.getChatResponse(chatRequestDTO));
+        return new ChatResponseDTO(genAIService.getChatResponseSimple(chatRequestDTO));
     }
-    @PostMapping("/extended")
-    public ChatResponseDTO getChatResponseExtended(@RequestBody ChatRequestDTO chatRequestDTO) {
-        return new ChatResponseDTO(genAIService.getResponseExtended(chatRequestDTO));
-    }
-
-    @PostMapping("/tense")
-    public TenseModel getTenseModelFromText(@RequestBody ChatRequestDTO chatRequestDTO) {
-        return genAIService.getTenseModelFromText(chatRequestDTO.question());
-    }
+//    @PostMapping("/extended")
+//    public ChatResponseDTO getChatResponseExtended(@RequestBody ChatRequestDTO chatRequestDTO) {
+//        return new ChatResponseDTO(genAIService.getResponseExtended(chatRequestDTO));
+//    }
+//
+//    @PostMapping("/tense")
+//    public TenseModel getTenseModelFromText(@RequestBody ChatRequestDTO chatRequestDTO) {
+//        return genAIService.getTenseModelFromText(chatRequestDTO.question());
+//    }
 }
