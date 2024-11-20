@@ -16,6 +16,7 @@ CREATE TABLE message_details
     history_chatbot_id BIGINT                NULL,
     message_user       MEDIUMTEXT            NULL,
     message_bot        MEDIUMTEXT            NULL,
+    responded_at       datetime              NULL,
     CONSTRAINT pk_message_details PRIMARY KEY (id)
 );
 

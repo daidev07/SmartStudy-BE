@@ -72,6 +72,7 @@ public class GenAIServiceImpl implements GenAIService {
                 .historyChatbot(historyChatbot)
                 .messageUser(chatRequestDTO.question())
                 .messageBot(answerBot)
+                .respondedAt(LocalDateTime.now())
                 .build());
 
         return answerBot;

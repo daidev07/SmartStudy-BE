@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -20,5 +22,5 @@ public class MessageDetails {
     HistoryChatbot historyChatbot;
     String messageUser;
     String messageBot;
-
+    LocalDateTime respondedAt;
 }
