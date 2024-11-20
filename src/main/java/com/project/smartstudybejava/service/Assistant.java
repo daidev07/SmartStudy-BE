@@ -14,7 +14,7 @@ public interface Assistant {
                     If you don't know answer, you can say "I don't know".
                     """
     )
-    String chat(@MemoryId int memoryId, @UserMessage String userMessage);
+    String chat(@MemoryId Long memoryId, @UserMessage String userMessage);
 
     @SystemMessage("Extract information about tenses from {{text}} in json object format.")
     @UserMessage("Please extract tense information from the provided text.")

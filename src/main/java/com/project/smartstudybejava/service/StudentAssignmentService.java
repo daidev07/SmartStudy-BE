@@ -6,6 +6,5 @@ import java.util.List;
 
 public interface StudentAssignmentService {
     List<StudentAssignment> getAssignmentByUserId(Long userId);
-
     StudentAssignment getAssignmentById(Long assignmentId);
 }

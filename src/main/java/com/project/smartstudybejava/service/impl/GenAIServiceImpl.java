@@ -11,8 +11,6 @@ import com.project.smartstudybejava.repository.UserRepository;
 import com.project.smartstudybejava.util.ErrorCode;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import com.project.smartstudybejava.service.Assistant;
 import com.project.smartstudybejava.service.GenAIService;
 import com.project.smartstudybejava.service.RAGAssistant;
@@ -48,11 +46,36 @@ public class GenAIServiceImpl implements GenAIService {
 //        return assistant.extractTenseFromText(question);
 //    }
 //
-//    @Override
-//    public String getResponseExtended(ChatRequestDTO chatRequestDTO) {
-//
-//        return assistant.chat(chatRequestDTO.userId(), chatRequestDTO.question());
-//    }
+    @Override
+    public String getResponseExtended(ChatRequestDTO chatRequestDTO) {
+        List<ChatMessage> messages = new ArrayList<>();
+        messages.add(UserMessage.userMessage(chatRequestDTO.question()));
+        String answerBot = assistant.chat(chatRequestDTO.userId(), chatRequestDTO.question());
+
+        userRepository.findById(chatRequestDTO.userId()).orElseThrow(
+                () -> new AppException(ErrorCode.USER_NOT_FOUND.getCode(), ErrorCode.USER_NOT_FOUND.getMessage()));
+
+        HistoryChatbot historyChatbot = historyChatbotRepository.findByUserId(chatRequestDTO.userId())
+                .orElseGet(() -> historyChatbotRepository.save(
+                        HistoryChatbot.builder()
+                                .user(User.builder().id(chatRequestDTO.userId()).build())
+                                .title(chatRequestDTO.question())
+                                .createdAt(LocalDateTime.now())
+                                .build()
+                ));
+
+        historyChatbot.setTitle(chatRequestDTO.question());
+        historyChatbot.setCreatedAt(LocalDateTime.now());
+        historyChatbotRepository.save(historyChatbot);
+
+        messageDetailsRepository.save(MessageDetails.builder()
+                .historyChatbot(historyChatbot)
+                .messageUser(chatRequestDTO.question())
+                .messageBot(answerBot)
+                .build());
+
+        return answerBot;
+    }
 
     public String getChatResponseSimple(ChatRequestDTO chatRequestDTO) {
 
@@ -90,10 +113,4 @@ public class GenAIServiceImpl implements GenAIService {
         return answerBot;
     }
 
-    @Override
-    public HistoryChatbot getHistoryChatbotByUserId(Long userId) {
-        return historyChatbotRepository.findByUserId(userId).orElseThrow(
-                () -> new AppException(ErrorCode.HISTORY_CHATBOT_NOT_FOUND.getCode(),
-                        ErrorCode.HISTORY_CHATBOT_NOT_FOUND.getMessage()));
-    }
 }

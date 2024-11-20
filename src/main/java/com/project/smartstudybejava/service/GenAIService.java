@@ -9,9 +9,6 @@ public interface GenAIService {
 //
 //    TenseModel getTenseModelFromText(String question);
 //
-//    String getResponseExtended(ChatRequestDTO chatRequestDTO);
-
+    String getResponseExtended(ChatRequestDTO chatRequestDTO);
     String getChatResponseSimple(ChatRequestDTO chatRequestDTO);
-
-    HistoryChatbot getHistoryChatbotByUserId(Long userId);
 }

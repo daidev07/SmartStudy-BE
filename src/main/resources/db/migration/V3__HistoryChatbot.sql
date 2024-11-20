@@ -14,8 +14,8 @@ CREATE TABLE message_details
 (
     id                 BIGINT AUTO_INCREMENT NOT NULL,
     history_chatbot_id BIGINT                NULL,
-    message_user       VARCHAR(255)          NULL,
-    message_bot        VARCHAR(255)          NULL,
+    message_user       MEDIUMTEXT            NULL,
+    message_bot        MEDIUMTEXT            NULL,
     CONSTRAINT pk_message_details PRIMARY KEY (id)
 );
 

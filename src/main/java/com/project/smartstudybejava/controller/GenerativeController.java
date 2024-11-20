@@ -21,7 +21,7 @@ public class GenerativeController  {
 
     @PostMapping("/ask-ai")
     public ChatResponseDTO getChatResponse(@RequestBody ChatRequestDTO chatRequestDTO) {
-        return new ChatResponseDTO(genAIService.getChatResponseSimple(chatRequestDTO));
+        return new ChatResponseDTO(genAIService.getResponseExtended(chatRequestDTO));
     }
 //    @PostMapping("/extended")
 //    public ChatResponseDTO getChatResponseExtended(@RequestBody ChatRequestDTO chatRequestDTO) {
@@ -33,11 +33,4 @@ public class GenerativeController  {
 //        return genAIService.getTenseModelFromText(chatRequestDTO.question());
 //    }
 
-    @GetMapping("/message-history/user/{userId}")
-    public ResponseData<HistoryChatbot> getHistoryChatbotByUserId(@PathVariable Long userId) {
-        return ResponseData.<HistoryChatbot>builder()
-                .message(SuccessCode.GET_SUCCESSFUL.getMessage())
-                .data(genAIService.getHistoryChatbotByUserId(userId))
-                .build();
-    }
 }
