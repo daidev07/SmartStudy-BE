@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -58,7 +59,12 @@ public class AnswerResultServiceImpl implements AnswerResultService {
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND.getCode(),
                         ErrorCode.USER_NOT_FOUND.getMessage()));
         studentAssignment.setPoint(point);
-        studentAssignment.setAssignmentStatus(EAssignmentStatus.SUBMITTED);
+        studentAssignment.setSubmittedAt(LocalDateTime.now());
+        if(studentAssignment.getSubmittedAt().isAfter(studentAssignment.getDueDate())) {
+            studentAssignment.setAssignmentStatus(EAssignmentStatus.LATE_SUBMISSION);
+        } else {
+            studentAssignment.setAssignmentStatus(EAssignmentStatus.SUBMITTED);
+        }
 
         studentAssignmentRepository.save(studentAssignment);
     }
