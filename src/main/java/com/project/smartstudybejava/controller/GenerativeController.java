@@ -23,14 +23,10 @@ public class GenerativeController  {
     public ChatResponseDTO getChatResponse(@RequestBody ChatRequestDTO chatRequestDTO) {
         return new ChatResponseDTO(genAIService.getResponseExtended(chatRequestDTO));
     }
-//    @PostMapping("/extended")
-//    public ChatResponseDTO getChatResponseExtended(@RequestBody ChatRequestDTO chatRequestDTO) {
-//        return new ChatResponseDTO(genAIService.getResponseExtended(chatRequestDTO));
-//    }
-//
-//    @PostMapping("/tense")
-//    public TenseModel getTenseModelFromText(@RequestBody ChatRequestDTO chatRequestDTO) {
-//        return genAIService.getTenseModelFromText(chatRequestDTO.question());
-//    }
+
+    @PostMapping("/tense")
+    public TenseModel getTenseModelFromText(@RequestBody ChatRequestDTO chatRequestDTO) {
+        return genAIService.getTenseModelFromText(chatRequestDTO.question());
+    }
 
 }

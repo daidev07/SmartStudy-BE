@@ -16,11 +16,13 @@ public class EmbeddingComponent {
     private final EmbeddingModel embeddingModel;
     private final EmbeddingStore embeddingStore;
 
+
     public void loadSingleDocument() {
         String currentDir = System.getProperty("user.dir");
-        String fileName = "/src/main/resources/documents/sample-test.pdf";
+        String fileName = "/src/main/resources/documents/HoXuanDai_Fresher.pdf";
 
-        Document document = FileSystemDocumentLoader.loadDocument(currentDir + "/" + fileName, new ApachePdfBoxDocumentParser());
+        Document document = FileSystemDocumentLoader.loadDocument(currentDir + "/" + fileName,
+                new ApachePdfBoxDocumentParser());
 
         EmbeddingStoreIngestor embeddingStoreIngestor = EmbeddingStoreIngestor.builder()
                 .documentSplitter(DocumentSplitters.recursive(300, 10))

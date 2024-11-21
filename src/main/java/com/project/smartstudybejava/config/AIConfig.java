@@ -31,7 +31,7 @@ public class AIConfig {
     public Assistant assistant () {
         return AiServices.builder(Assistant.class)
                 .chatLanguageModel(chatLanguageModel())
-                .chatMemoryProvider(memoryId -> MessageWindowChatMemory.withMaxMessages(10))
+                .chatMemoryProvider(memoryId -> MessageWindowChatMemory.withMaxMessages(50))
                 .build();
     }
 
@@ -74,7 +74,7 @@ public class AIConfig {
 
         return AiServices.builder(RAGAssistant.class)
                 .chatLanguageModel(chatLanguageModel())
-                .chatMemoryProvider(memoryId -> MessageWindowChatMemory.withMaxMessages(10))
+                .chatMemoryProvider(memoryId -> MessageWindowChatMemory.withMaxMessages(100))
                 .retrievalAugmentor(retrievalAugmentor)
                 .build();
     }

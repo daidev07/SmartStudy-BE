@@ -5,10 +5,6 @@ import com.project.smartstudybejava.entity.HistoryChatbot;
 import com.project.smartstudybejava.model.TenseModel;
 
 public interface GenAIService {
-//    String getChatResponse(ChatRequestDTO chatRequestDTO);
-//
-//    TenseModel getTenseModelFromText(String question);
-//
+    TenseModel getTenseModelFromText(String question);
     String getResponseExtended(ChatRequestDTO chatRequestDTO);
-    String getChatResponseSimple(ChatRequestDTO chatRequestDTO);
 }

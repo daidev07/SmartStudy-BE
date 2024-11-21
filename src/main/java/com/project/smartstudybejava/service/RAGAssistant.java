@@ -11,5 +11,5 @@ public interface RAGAssistant {
                     If you don't know answer, you can say "I don't know".
                     """
     )
-    String chat(@MemoryId int memoryId, @UserMessage String userMessage);
+    String chat(@MemoryId Long memoryId, @UserMessage String userMessage);
 }
