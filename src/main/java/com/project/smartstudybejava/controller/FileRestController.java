@@ -1,6 +1,6 @@
 package com.project.smartstudybejava.controller;
 
-import com.project.smartstudybejava.service.UploadFileService;
+import com.project.smartstudybejava.service.CloudinaryService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -18,10 +18,10 @@ import java.io.IOException;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class FileRestController {
-    UploadFileService uploadFileService;
+    CloudinaryService cloudinaryService;
 
     @PostMapping
     public ResponseEntity<?> upload(@RequestParam("avatar") MultipartFile avatar) throws IOException {
-        return ResponseEntity.ok(uploadFileService.saveAvatar(avatar));
+        return ResponseEntity.ok(cloudinaryService.saveFile(avatar));
     }
 }

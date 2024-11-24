@@ -24,6 +24,6 @@ public class Question {
     @JoinColumn(name = "exam_id")
     Exam exam;
     String content;
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Answer> answers;
 }

@@ -1,8 +1,10 @@
 package com.project.smartstudybejava.controller;
 
+import com.project.smartstudybejava.dto.req.ExamRequest;
 import com.project.smartstudybejava.dto.res.ExamResponse;
 import com.project.smartstudybejava.entity.Exam;
 import com.project.smartstudybejava.service.ExamService;
+import com.project.smartstudybejava.util.ErrorCode;
 import com.project.smartstudybejava.util.ResponseData;
 import com.project.smartstudybejava.util.SuccessCode;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +24,19 @@ public class ExamController {
     ExamService examService;
 
     @PostMapping()
-    public ResponseEntity<String> createExamWithQuestions(@RequestParam("examName") String examName,
-                                                          @RequestParam("examFile") MultipartFile examFile) {
+    public ResponseData<Exam> createExam(@ModelAttribute ExamRequest examRequest) {
         try {
-            examService.createExamWithQuestions(examName, examFile);
-            return ResponseEntity.ok("Tạo đề thi và import câu hỏi thành công!");
+            Exam exam = examService.createExam(examRequest);
+            return ResponseData.<Exam>builder()
+                    .code(SuccessCode.CREATE_EXAM_SUCCESSFUL.getCode())
+                    .message(SuccessCode.CREATE_EXAM_SUCCESSFUL.getMessage())
+                    .data(exam)
+                    .build();
         } catch (IOException e) {
-            return ResponseEntity.status(500).body("Lỗi khi import file: " + e.getMessage());
+            return ResponseData.<Exam>builder()
+                    .code(ErrorCode.CREATE_EXAM_FAILED.getCode())
+                    .message(ErrorCode.CREATE_EXAM_FAILED.getMessage())
+                    .build();
         }
     }
     @GetMapping

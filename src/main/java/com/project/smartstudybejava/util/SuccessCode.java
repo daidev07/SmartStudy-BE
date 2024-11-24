@@ -11,7 +11,9 @@ import org.springframework.http.HttpStatus;
 public enum SuccessCode {
     CREATED(201, "Success Created" , HttpStatus.CREATED),
     GET_SUCCESSFUL(200, "Get Successful" , HttpStatus.OK),
+
     GET_EXAM_SUCCESSFUL(200, "Get Exam Successful" , HttpStatus.OK),
+    CREATE_EXAM_SUCCESSFUL(201, "Create exam successful" , HttpStatus.CREATED),
 
     GET_ASSIGNMENT_SUCCESSFUL(200, "Get assignment successful" , HttpStatus.OK),
     ASSIGN_SUCCESSFUL(201, "Assignment to classroom successful" , HttpStatus.CREATED),

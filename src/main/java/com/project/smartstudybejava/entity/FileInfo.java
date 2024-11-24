@@ -1,10 +1,8 @@
 package com.project.smartstudybejava.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.GenericGenerator;
 
 @NoArgsConstructor
@@ -13,24 +11,25 @@ import org.hibernate.annotations.GenericGenerator;
 @Setter
 @Entity
 @Table(name = "files")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class FileInfo {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+    String id;
 
     @Column(name = "file_name")
-    private String fileName;
+    String fileName;
 
     @Column(name = "file_folder")
-    private String fileFolder;
+    String fileFolder;
 
     @Column(name = "file_url")
-    private String fileUrl;
+    String fileUrl;
 
     @Column(name = "file_type")
-    private String fileType;
+    String fileType;
 
     @Column(name = "cloud_id")
-    private String cloudId;
+    String cloudId;
 }

@@ -1,13 +1,16 @@
 package com.project.smartstudybejava.service.impl;
 
+import com.project.smartstudybejava.dto.req.ExamRequest;
 import com.project.smartstudybejava.dto.res.ExamResponse;
 import com.project.smartstudybejava.entity.Answer;
 import com.project.smartstudybejava.entity.Exam;
+import com.project.smartstudybejava.entity.FileInfo;
 import com.project.smartstudybejava.entity.Question;
 import com.project.smartstudybejava.exception.AppException;
 import com.project.smartstudybejava.repository.AnswerRepository;
 import com.project.smartstudybejava.repository.ExamRepository;
 import com.project.smartstudybejava.repository.QuestionRepository;
+import com.project.smartstudybejava.service.CloudinaryService;
 import com.project.smartstudybejava.service.ExamService;
 import com.project.smartstudybejava.util.ErrorCode;
 import lombok.AccessLevel;
@@ -35,19 +38,29 @@ public class ExamServiceImpl implements ExamService {
     ExamRepository examRepository;
     QuestionRepository questionRepository;
     AnswerRepository answerRepository;
+    CloudinaryService cloudinaryService;
 
-    public void createExamWithQuestions(String examName, MultipartFile examFile) throws IOException {
+    public Exam createExam(ExamRequest examRequest) throws IOException {
 
-        if(examRepository.existsByName(examName)) {
+        if(examRepository.existsByName(examRequest.getExamName())) {
             throw new AppException(ErrorCode.EXAM_EXISTED.getCode(), ErrorCode.EXAM_EXISTED.getMessage());
         }
 
         Exam exam = new Exam();
-        exam.setName(examName);
+        exam.setName(examRequest.getExamName());
         exam.setCreatedAt(LocalDate.now());
         exam = examRepository.save(exam);
 
-        importQuestionsFromExcel(exam, examFile);
+        importQuestionsFromExcel(exam, examRequest.getExamFile());
+
+        if (examRequest.getListenFile() != null && examRequest.getPdfFile() != null) {
+            FileInfo listenFileUrl = cloudinaryService.saveFile(examRequest.getListenFile());
+            FileInfo pdfFileUrl = cloudinaryService.saveFile(examRequest.getPdfFile());
+            exam.setListenFileUrl(listenFileUrl);
+            exam.setPdfFileUrl(pdfFileUrl);
+        }
+
+        return examRepository.save(exam);
     }
 
     @Override

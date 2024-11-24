@@ -61,12 +61,14 @@ public class GenAIServiceImpl implements GenAIService {
                 .orElseGet(() -> historyChatbotRepository.save(
                         HistoryChatbot.builder()
                                 .user(User.builder().id(chatRequestDTO.userId()).build())
-                                .title(chatRequestDTO.question())
-                                .createdAt(LocalDateTime.now())
                                 .build()
                 ));
 
-        historyChatbot.setTitle(chatRequestDTO.question());
+        String title = chatRequestDTO.question();
+        if (title.length() > 100) {
+            title = title.substring(0, 100) + "...";
+        }
+        historyChatbot.setTitle(title);
         historyChatbot.setCreatedAt(LocalDateTime.now());
         historyChatbotRepository.save(historyChatbot);
 

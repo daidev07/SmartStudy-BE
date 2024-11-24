@@ -1,6 +1,7 @@
 package com.project.smartstudybejava.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,7 +25,12 @@ public class Exam {
     Long id;
     String name;
     LocalDate createdAt;
-    @OneToMany(mappedBy = "exam")
-    @JsonIgnore
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("exam")
     List<Question> questions;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    FileInfo listenFileUrl;
+    @OneToOne(cascade = CascadeType.ALL)
+    FileInfo pdfFileUrl;
 }

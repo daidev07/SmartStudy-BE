@@ -1,11 +1,9 @@
 package com.project.smartstudybejava.service.impl;
 
 import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 import com.project.smartstudybejava.entity.FileInfo;
-import com.project.smartstudybejava.entity.Exam;
 import com.project.smartstudybejava.repository.FileInfoRepository;
-import com.project.smartstudybejava.service.UploadFileService;
+import com.project.smartstudybejava.service.CloudinaryService;
 import com.project.smartstudybejava.util.FileUploadUtil;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -19,13 +17,13 @@ import java.io.IOException;
 @Service
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class UploadFileServiceImpl implements UploadFileService {
+public class CloudinaryServiceImpl implements CloudinaryService {
 
     Cloudinary cloudinary;
     FileInfoRepository fileInfoRepository;
     FileUploadUtil fileUploadUtil;
 
-    public FileInfo saveAvatar(MultipartFile avatar) throws IOException {
+    public FileInfo saveFile(MultipartFile avatar) throws IOException {
         if (avatar == null) {
             return null;
         }

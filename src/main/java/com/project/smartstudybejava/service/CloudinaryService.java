@@ -6,6 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
-public interface UploadFileService {
-    FileInfo saveAvatar(MultipartFile avatar) throws IOException;
+public interface CloudinaryService {
+    FileInfo saveFile(MultipartFile file) throws IOException;
 }

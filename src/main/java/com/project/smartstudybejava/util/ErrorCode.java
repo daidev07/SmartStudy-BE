@@ -19,12 +19,13 @@ public enum ErrorCode {
     CLASSROOM_NOT_FOUND(404, "Classroom not found", HttpStatus.NOT_FOUND),
     CLASSROOM_EXISTED(400, "Classroom existed", HttpStatus.BAD_REQUEST),
 
+    CREATE_EXAM_FAILED(400, "Create exam failed", HttpStatus.BAD_REQUEST),
     EXAM_EXISTED(400, "Exam existed", HttpStatus.BAD_REQUEST),
     EXAM_NOT_FOUND(404, "Exam not found", HttpStatus.NOT_FOUND),
 
     ASSIGNMENT_NOT_FOUND(404, "Assignment not found", HttpStatus.NOT_FOUND),
-
     STUDENT_ASSIGNMENT_NOT_FOUND(404, "Student assignment not found", HttpStatus.NOT_FOUND),
+
     QUESTION_NOT_FOUND(404, "Question not found", HttpStatus.NOT_FOUND),
     ANSWER_NOT_FOUND(404, "Answer not found", HttpStatus.NOT_FOUND),
 
