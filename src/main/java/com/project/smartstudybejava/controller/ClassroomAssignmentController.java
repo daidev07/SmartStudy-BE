@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/classroom-assignment")
@@ -30,4 +32,11 @@ public class ClassroomAssignmentController {
                 .build();
     }
 
+    @GetMapping("/class/{classroomId}")
+    public ResponseData<List<ClassroomAssignment>> getListClassroomAssignmentByClassroomId(@PathVariable Long classroomId) {
+        return ResponseData.<List<ClassroomAssignment>>builder()
+                .message(SuccessCode.GET_ASSIGNMENT_SUCCESSFUL.getMessage())
+                .data(classroomAssignmentService.getListClassroomAssignmentByClassroomId(classroomId))
+                .build();
+    }
 }

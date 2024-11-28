@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ClassroomAssignmentRepository extends JpaRepository<ClassroomAssignment, Long> {
 
+    List<ClassroomAssignment> findByClassroomId(Long classroomId);
 }

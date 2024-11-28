@@ -41,7 +41,7 @@ public class ClassroomAssignmentServiceImpl implements ClassroomAssignmentServic
         classroomAssignment.setExam(exam);
         classroomAssignment.setName(title);
         classroomAssignment.setDescription(description);
-        classroomAssignment.setCreatedAt(LocalDateTime.now());
+        classroomAssignment.setAssignedAt(LocalDateTime.now());
         classroomAssignment.setDueDate(dueDate);
 
 
@@ -54,7 +54,7 @@ public class ClassroomAssignmentServiceImpl implements ClassroomAssignmentServic
             studentAssignment.setExam(exam);
             studentAssignment.setName(title);
             studentAssignment.setDescription(description);
-            studentAssignment.setCreatedAt(LocalDateTime.now());
+            studentAssignment.setAssignedAt(LocalDateTime.now());
             studentAssignment.setDueDate(dueDate);
             studentAssignment.setPoint(point != null ? point : 0L);
             studentAssignment.setAssignmentStatus(EAssignmentStatus.NOT_SUBMIT);
@@ -67,5 +67,13 @@ public class ClassroomAssignmentServiceImpl implements ClassroomAssignmentServic
                 .data(classroomAssignment)
                 .build().getData();
 
+    }
+
+    @Override
+    public List<ClassroomAssignment> getListClassroomAssignmentByClassroomId(Long classroomId) {
+        classroomRepository.findById(classroomId).orElseThrow(() ->
+                new AppException(ErrorCode.CLASSROOM_NOT_FOUND.getCode(), ErrorCode.CLASSROOM_NOT_FOUND.getMessage()));
+
+        return classroomAssignmentRepository.findByClassroomId(classroomId);
     }
 }

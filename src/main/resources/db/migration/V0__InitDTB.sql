@@ -117,7 +117,7 @@ CREATE TABLE classroom_assignments
     exam_id       BIGINT                NULL,
     classroom_id  BIGINT                NULL,
     `description` VARCHAR(255)          NULL,
-    created_at    datetime              NULL,
+    assigned_at    datetime              NULL,
     due_date      datetime              NULL,
     CONSTRAINT pk_classroom_assignments PRIMARY KEY (id)
 );
@@ -135,7 +135,7 @@ CREATE TABLE student_assignments
     exam_id           BIGINT                NULL,
     user_id           BIGINT                NULL,
     `description`     VARCHAR(255)          NULL,
-    created_at        datetime              NULL,
+    assigned_at        datetime              NULL,
     due_date          datetime              NULL,
     submitted_at      datetime              NULL,
     point             BIGINT                NULL,

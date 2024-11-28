@@ -26,6 +26,6 @@ public class ClassroomAssignment {
     @ManyToOne
     Classroom classroom;
     String description;
-    LocalDateTime createdAt;
+    LocalDateTime assignedAt;
     LocalDateTime dueDate;
 }

@@ -30,7 +30,7 @@ public class StudentAssignment {
     @ManyToOne
     User user;
     String description;
-    LocalDateTime createdAt;
+    LocalDateTime assignedAt;
     LocalDateTime dueDate;
     LocalDateTime submittedAt;
     Long point;

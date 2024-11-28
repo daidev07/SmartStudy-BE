@@ -1,5 +1,6 @@
 package com.project.smartstudybejava.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +19,7 @@ public class Answer {
     Long id;
     @ManyToOne
     @JoinColumn(name = "question_id")
+    @JsonIgnore
     Question question;
     String content;
     Boolean isCorrect;
