@@ -17,6 +17,9 @@ public enum SuccessCode {
 
     GET_ASSIGNMENT_SUCCESSFUL(200, "Get assignment successful" , HttpStatus.OK),
     ASSIGN_SUCCESSFUL(201, "Assignment to classroom successful" , HttpStatus.CREATED),
+
+    POST_SUCCESSFUL(201, "Post successful" , HttpStatus.CREATED),
+
     ;
 
     int code;
