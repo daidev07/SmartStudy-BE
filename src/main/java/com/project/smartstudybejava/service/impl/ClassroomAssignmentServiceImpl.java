@@ -28,7 +28,7 @@ public class ClassroomAssignmentServiceImpl implements ClassroomAssignmentServic
     UserRepository userRepository;
 
     @Override
-    public ClassroomAssignment assignToClassroom(Long classroomId, Long examId, String title, String description
+    public ClassroomAssignment assignToClassroom(Long classroomId, Long examId, String name, String description
                                                     , LocalDateTime dueDate, Long point) {
 
         Classroom classroom = classroomRepository.findById(classroomId).orElseThrow(() ->
@@ -39,7 +39,7 @@ public class ClassroomAssignmentServiceImpl implements ClassroomAssignmentServic
         ClassroomAssignment classroomAssignment = new ClassroomAssignment();
         classroomAssignment.setClassroom(classroom);
         classroomAssignment.setExam(exam);
-        classroomAssignment.setName(title);
+        classroomAssignment.setName(name);
         classroomAssignment.setDescription(description);
         classroomAssignment.setAssignedAt(LocalDateTime.now());
         classroomAssignment.setDueDate(dueDate);
@@ -52,7 +52,7 @@ public class ClassroomAssignmentServiceImpl implements ClassroomAssignmentServic
             StudentAssignment studentAssignment = new StudentAssignment();
             studentAssignment.setUser(student);
             studentAssignment.setExam(exam);
-            studentAssignment.setName(title);
+            studentAssignment.setName(name);
             studentAssignment.setDescription(description);
             studentAssignment.setAssignedAt(LocalDateTime.now());
             studentAssignment.setDueDate(dueDate);

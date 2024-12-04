@@ -20,7 +20,7 @@ public class EmbeddingComponent {
 
     public void loadSingleDocument() {
         String currentDir = System.getProperty("user.dir");
-        String fileName = "/src/main/resources/documents/Reading_1.pdf";
+        String fileName = "/src/main/resources/documents/HoXuanDai_Fresher.pdf";
 
         Document document = FileSystemDocumentLoader.loadDocument(currentDir + "/" + fileName,
                 new ApachePdfBoxDocumentParser());

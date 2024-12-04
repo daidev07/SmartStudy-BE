@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AssignmentRequest {
-    String title;
+    String name;
     String description;
     LocalDateTime dueDate;
     Long totalPoints = 0L;

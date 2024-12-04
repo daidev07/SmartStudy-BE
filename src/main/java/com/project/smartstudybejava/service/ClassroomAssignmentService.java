@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ClassroomAssignmentService {
-    ClassroomAssignment assignToClassroom(Long classroomId, Long examId, String title, String description
+    ClassroomAssignment assignToClassroom(Long classroomId, Long examId, String name, String description
                                                     , LocalDateTime dueDate, Long totalPoints);
     List<ClassroomAssignment> getListClassroomAssignmentByClassroomId(Long classroomId);
 }
