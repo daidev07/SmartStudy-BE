@@ -36,32 +36,37 @@ public class ClassroomAssignmentServiceImpl implements ClassroomAssignmentServic
         Exam exam = examRepository.findById(examId).orElseThrow(() ->
                 new AppException(ErrorCode.EXAM_NOT_FOUND.getCode(), ErrorCode.EXAM_NOT_FOUND.getMessage()));
 
-        ClassroomAssignment classroomAssignment = new ClassroomAssignment();
-        classroomAssignment.setClassroom(classroom);
-        classroomAssignment.setExam(exam);
-        classroomAssignment.setName(name);
-        classroomAssignment.setDescription(description);
-        classroomAssignment.setAssignedAt(LocalDateTime.now());
-        classroomAssignment.setDueDate(dueDate);
+        if(dueDate.isBefore(LocalDateTime.now())) {
+            throw new AppException(ErrorCode.DUE_DATE_INVALID.getCode(), ErrorCode.DUE_DATE_INVALID.getMessage());
+        }
+        if(classroomAssignmentRepository.existsByExamIdAndClassroomId(examId, classroomId)) {
+            throw new AppException(ErrorCode.ASSIGNMENT_EXISTED.getCode(), ErrorCode.ASSIGNMENT_EXISTED.getMessage());
+        }
 
-
+        ClassroomAssignment classroomAssignment =  ClassroomAssignment.builder()
+                .name(name)
+                .exam(exam)
+                .classroom(classroom)
+                .description(description)
+                .assignedAt(LocalDateTime.now())
+                .dueDate(dueDate)
+                .build();
         classroomAssignment = classroomAssignmentRepository.save(classroomAssignment);
 
         List<User> students = userRepository.findByClassroom(classroom);
         for (User student : students) {
-            StudentAssignment studentAssignment = new StudentAssignment();
-            studentAssignment.setUser(student);
-            studentAssignment.setExam(exam);
-            studentAssignment.setName(name);
-            studentAssignment.setDescription(description);
-            studentAssignment.setAssignedAt(LocalDateTime.now());
-            studentAssignment.setDueDate(dueDate);
-            studentAssignment.setPoint(point != null ? point : 0L);
-            studentAssignment.setAssignmentStatus(EAssignmentStatus.NOT_SUBMIT);
-
+            StudentAssignment studentAssignment = StudentAssignment.builder()
+                    .user(student)
+                    .exam(exam)
+                    .name(name)
+                    .description(description)
+                    .assignedAt(LocalDateTime.now())
+                    .dueDate(dueDate)
+                    .point(point != null ? point : 0L)
+                    .assignmentStatus(EAssignmentStatus.NOT_SUBMIT)
+                    .build();
             studentAssignmentRepository.save(studentAssignment);
         }
-
         return ResponseData.<ClassroomAssignment>builder()
                 .message(SuccessCode.ASSIGN_SUCCESSFUL.getMessage())
                 .data(classroomAssignment)

@@ -25,6 +25,8 @@ public enum ErrorCode {
 
     ASSIGNMENT_NOT_FOUND(404, "Assignment not found", HttpStatus.NOT_FOUND),
     STUDENT_ASSIGNMENT_NOT_FOUND(404, "Student assignment not found", HttpStatus.NOT_FOUND),
+    DUE_DATE_INVALID(410, "Due date invalid", HttpStatus.BAD_REQUEST),
+    ASSIGNMENT_EXISTED(411, "Assignment existed", HttpStatus.BAD_REQUEST),
 
     QUESTION_NOT_FOUND(404, "Question not found", HttpStatus.NOT_FOUND),
     ANSWER_NOT_FOUND(404, "Answer not found", HttpStatus.NOT_FOUND),

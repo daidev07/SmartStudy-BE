@@ -1,10 +1,7 @@
 package com.project.smartstudybejava.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
@@ -14,6 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "classroom_assignments")
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 public class ClassroomAssignment {
@@ -28,4 +26,5 @@ public class ClassroomAssignment {
     String description;
     LocalDateTime assignedAt;
     LocalDateTime dueDate;
+
 }
