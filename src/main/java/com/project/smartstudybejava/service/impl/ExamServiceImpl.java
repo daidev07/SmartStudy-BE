@@ -6,6 +6,7 @@ import com.project.smartstudybejava.entity.Answer;
 import com.project.smartstudybejava.entity.Exam;
 import com.project.smartstudybejava.entity.FileInfo;
 import com.project.smartstudybejava.entity.Question;
+import com.project.smartstudybejava.enumeration.EExamType;
 import com.project.smartstudybejava.exception.AppException;
 import com.project.smartstudybejava.repository.AnswerRepository;
 import com.project.smartstudybejava.repository.ExamRepository;
@@ -49,18 +50,27 @@ public class ExamServiceImpl implements ExamService {
         Exam exam = new Exam();
         exam.setName(examRequest.getExamName());
         exam.setCreatedAt(LocalDate.now());
-        exam = examRepository.save(exam);
 
-        importQuestionsFromExcel(exam, examRequest.getExamFile());
-
-        if (examRequest.getListenFile() != null && examRequest.getPdfFile() != null) {
-            FileInfo listenFileUrl = cloudinaryService.saveFile(examRequest.getListenFile());
-            FileInfo pdfFileUrl = cloudinaryService.saveFile(examRequest.getPdfFile());
+        if(examRequest.getGrammarFile() != null) {
+            exam.setExamType(EExamType.GRAMMAR);
+            exam = examRepository.save(exam);
+            importQuestionsFromExcel(exam, examRequest.getGrammarFile());
+        } else if (examRequest.getListenMp3File() != null && examRequest.getListenPdfFile() != null) {
+            FileInfo listenFileUrl = cloudinaryService.saveMp3File(examRequest.getListenMp3File());
+            FileInfo pdfFileUrl = cloudinaryService.saveMp3File(examRequest.getListenPdfFile());
             exam.setListenFileUrl(listenFileUrl);
             exam.setPdfFileUrl(pdfFileUrl);
+            exam.setExamType(EExamType.LISTENING);
+            exam = examRepository.save(exam);
+            importQuestionsFromExcel(exam, examRequest.getListenAnswerFile());
+        }
+        if (examRequest.getGrammarFile() == null && examRequest.getListenPdfFile() == null &&
+                examRequest.getListenMp3File() == null) {
+            exam.setExamType(EExamType.READING);
+            exam = examRepository.save(exam);
         }
 
-        return examRepository.save(exam);
+        return exam;
     }
 
     @Override
@@ -102,8 +112,8 @@ public class ExamServiceImpl implements ExamService {
         Sheet sheet = workbook.getSheetAt(0);
 
         for (Row row : sheet) {
-            // Đọc dữ liệu từ các cột
-            String questionContent = row.getCell(0).getStringCellValue();
+            String questionContent = row.getCell(0) != null ? row.getCell(0).getStringCellValue()
+                    : "";
             String answer1 = row.getCell(1).getStringCellValue();
             String answer2 = row.getCell(2).getStringCellValue();
             String answer3 = row.getCell(3).getStringCellValue();

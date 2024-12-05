@@ -30,7 +30,7 @@ CREATE TABLE users
     password              VARCHAR(255)          NULL,
     classroom_id          BIGINT                NULL,
     dob                   date                  NULL,
-    study_status          TINYINT               NULL,
+    study_status          VARCHAR(255)          NULL,
     created_at            datetime              NULL,
     updated_at            datetime              NULL,
     verification_code     VARCHAR(255)          NULL,
@@ -81,11 +81,20 @@ ALTER TABLE user_roles
 
 CREATE TABLE exams
 (
-    id         BIGINT AUTO_INCREMENT NOT NULL,
-    name       VARCHAR(255)          NULL,
-    created_at date                  NULL,
+    id                 BIGINT AUTO_INCREMENT NOT NULL,
+    name               VARCHAR(255)          NULL,
+    created_at         date                  NULL,
+    listen_file_url_id VARCHAR(255)          NULL,
+    pdf_file_url_id    VARCHAR(255)          NULL,
+    exam_type          VARCHAR(255)          NULL,
     CONSTRAINT pk_exams PRIMARY KEY (id)
 );
+
+ALTER TABLE exams
+    ADD CONSTRAINT FK_EXAMS_ON_LISTENFILEURL FOREIGN KEY (listen_file_url_id) REFERENCES files (id);
+
+ALTER TABLE exams
+    ADD CONSTRAINT FK_EXAMS_ON_PDFFILEURL FOREIGN KEY (pdf_file_url_id) REFERENCES files (id);
 
 CREATE TABLE questions
 (
@@ -139,7 +148,7 @@ CREATE TABLE student_assignments
     due_date          datetime              NULL,
     submitted_at      datetime              NULL,
     point             BIGINT                NULL,
-    assignment_status TINYINT              NULL,
+    assignment_status VARCHAR(255)          NULL,
     CONSTRAINT pk_student_assignments PRIMARY KEY (id)
 );
 

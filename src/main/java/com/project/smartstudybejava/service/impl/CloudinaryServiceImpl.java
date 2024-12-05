@@ -44,5 +44,25 @@ public class CloudinaryServiceImpl implements CloudinaryService {
         fileInfoRepository.save(file);
         return file;
     }
+    public FileInfo saveMp3File(MultipartFile mp3File) throws IOException {
+        if (mp3File == null) {
+            return null;
+        }
+        var file = new FileInfo();
+        fileInfoRepository.save(file);
 
+        var uploadResult = cloudinary.uploader().upload(mp3File.getBytes(), fileUploadUtil.buildAudioUploadParams(file));
+
+        String fileUrl = (String) uploadResult.get("secure_url");
+        String fileFormat = (String) uploadResult.get("format");
+
+        file.setFileName(file.getId() + "." + fileFormat);
+        file.setFileUrl(fileUrl);
+        file.setFileFolder(FileUploadUtil.AUDIO_UPLOAD_FOLDER);
+        file.setCloudId(file.getFileFolder() + "/" + file.getId());
+        String fileType = file.getFileName().substring(file.getFileName().lastIndexOf(".") + 1);
+        file.setFileType(fileType);
+        fileInfoRepository.save(file);
+        return file;
+    }
 }

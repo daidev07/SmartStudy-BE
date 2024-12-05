@@ -32,6 +32,6 @@ public class StudentAssignment {
     LocalDateTime dueDate;
     LocalDateTime submittedAt;
     Long point;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     EAssignmentStatus assignmentStatus;
 }

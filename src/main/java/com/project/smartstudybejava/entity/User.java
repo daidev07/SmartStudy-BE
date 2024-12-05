@@ -35,7 +35,7 @@ public class User {
     Classroom classroom;
     @JsonFormat(pattern = "dd-MM-yyyy")
     LocalDate dob;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     EStudyStatus studyStatus;
 
     LocalDateTime createdAt;

@@ -8,4 +8,5 @@ import java.io.IOException;
 
 public interface CloudinaryService {
     FileInfo saveFile(MultipartFile file) throws IOException;
+    FileInfo saveMp3File(MultipartFile mp3File) throws IOException;
 }

@@ -2,6 +2,7 @@ package com.project.smartstudybejava.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.project.smartstudybejava.enumeration.EExamType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,4 +34,7 @@ public class Exam {
     FileInfo listenFileUrl;
     @OneToOne(cascade = CascadeType.ALL)
     FileInfo pdfFileUrl;
+    @Enumerated(EnumType.STRING)
+    EExamType examType;
+
 }
