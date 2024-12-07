@@ -25,5 +25,5 @@ public class Question {
     Exam exam;
     String content;
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    private List<Answer> answers;
+    List<Answer> answers;
 }
