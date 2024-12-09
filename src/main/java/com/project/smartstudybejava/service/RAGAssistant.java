@@ -12,4 +12,11 @@ public interface RAGAssistant {
                     """
     )
     String chat(@MemoryId Long memoryId, @UserMessage String userMessage);
+    @SystemMessage(
+            """
+                    You are a helpful assistant. Try to respond in a fair and helpful manner.
+                    If you don't know answer, you can say "I don't know".
+                    """
+    )
+    String getResponseFromIconAskAI(@MemoryId Long memoryId, @UserMessage String userMessage, String expandedContent);
 }

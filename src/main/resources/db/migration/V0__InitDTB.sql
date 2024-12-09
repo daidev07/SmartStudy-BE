@@ -96,16 +96,27 @@ ALTER TABLE exams
 ALTER TABLE exams
     ADD CONSTRAINT FK_EXAMS_ON_PDFFILEURL FOREIGN KEY (pdf_file_url_id) REFERENCES files (id);
 
+CREATE TABLE expand_contents
+(
+    id      BIGINT AUTO_INCREMENT NOT NULL,
+    content LONGTEXT          NULL,
+    CONSTRAINT pk_expand_contents PRIMARY KEY (id)
+);
+
 CREATE TABLE questions
 (
     id      BIGINT AUTO_INCREMENT NOT NULL,
+    question_number   INT NULL,
     exam_id BIGINT                NULL,
     content VARCHAR(255)          NULL,
+    expand_content_id BIGINT      NULL,
     CONSTRAINT pk_questions PRIMARY KEY (id)
 );
 
 ALTER TABLE questions
     ADD CONSTRAINT FK_QUESTIONS_ON_EXAM FOREIGN KEY (exam_id) REFERENCES exams (id);
+ALTER TABLE questions
+    ADD CONSTRAINT FK_QUESTIONS_ON_EXPANDCONTENT FOREIGN KEY (expand_content_id) REFERENCES expand_contents (id);
 
 CREATE TABLE answers
 (

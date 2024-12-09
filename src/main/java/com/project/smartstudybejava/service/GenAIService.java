@@ -7,4 +7,5 @@ import com.project.smartstudybejava.model.TenseModel;
 public interface GenAIService {
     TenseModel getTenseModelFromText(String question);
     String getResponseExtended(ChatRequestDTO chatRequestDTO);
+    String getResponseFromIconAskAI(ChatRequestDTO chatRequestDTO);
 }

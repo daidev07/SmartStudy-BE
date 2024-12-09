@@ -16,5 +16,7 @@ public class ExamRequest {
     MultipartFile listenMp3File;
     MultipartFile listenPdfFile;
     MultipartFile listenAnswerFile;
+    MultipartFile readingPdfFile;
+    MultipartFile readingAnswerFile;
     String examType;
 }

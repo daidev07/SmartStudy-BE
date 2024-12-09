@@ -1,32 +1,25 @@
 package com.project.smartstudybejava.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
-import java.util.List;
-
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "questions")
+@Table(name = "expand_contents")
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
-public class Question {
+public class ExpandContent {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     Long id;
-    @ManyToOne
-    @JoinColumn(name = "exam_id")
-    Exam exam;
-    Integer questionNumber;
     String content;
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
-    List<Answer> answers;
-    @OneToOne(cascade = CascadeType.ALL)
-    ExpandContent expandContent;
 }

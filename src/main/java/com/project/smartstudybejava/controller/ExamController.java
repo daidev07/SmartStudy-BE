@@ -9,9 +9,7 @@ import com.project.smartstudybejava.util.ResponseData;
 import com.project.smartstudybejava.util.SuccessCode;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,10 +21,26 @@ import java.util.List;
 public class ExamController {
     ExamService examService;
 
-    @PostMapping()
-    public ResponseData<Exam> createExam(@ModelAttribute ExamRequest examRequest) {
+    @PostMapping("/listening")
+    public ResponseData<Exam> createListeningExam(@ModelAttribute ExamRequest examRequest) {
         try {
-            Exam exam = examService.createExam(examRequest);
+            Exam exam = examService.createListeningExam(examRequest);
+            return ResponseData.<Exam>builder()
+                    .code(SuccessCode.CREATE_EXAM_SUCCESSFUL.getCode())
+                    .message(SuccessCode.CREATE_EXAM_SUCCESSFUL.getMessage())
+                    .data(exam)
+                    .build();
+        } catch (IOException e) {
+            return ResponseData.<Exam>builder()
+                    .code(ErrorCode.CREATE_EXAM_FAILED.getCode())
+                    .message(ErrorCode.CREATE_EXAM_FAILED.getMessage())
+                    .build();
+        }
+    }
+    @PostMapping("/reading")
+    public ResponseData<Exam> createReadingExam(@ModelAttribute ExamRequest examRequest) {
+        try {
+            Exam exam = examService.createReadingExam(examRequest);
             return ResponseData.<Exam>builder()
                     .code(SuccessCode.CREATE_EXAM_SUCCESSFUL.getCode())
                     .message(SuccessCode.CREATE_EXAM_SUCCESSFUL.getMessage())

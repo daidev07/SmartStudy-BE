@@ -2,14 +2,12 @@ package com.project.smartstudybejava.service.impl;
 
 import com.project.smartstudybejava.dto.req.ExamRequest;
 import com.project.smartstudybejava.dto.res.ExamResponse;
-import com.project.smartstudybejava.entity.Answer;
-import com.project.smartstudybejava.entity.Exam;
-import com.project.smartstudybejava.entity.FileInfo;
-import com.project.smartstudybejava.entity.Question;
+import com.project.smartstudybejava.entity.*;
 import com.project.smartstudybejava.enumeration.EExamType;
 import com.project.smartstudybejava.exception.AppException;
 import com.project.smartstudybejava.repository.AnswerRepository;
 import com.project.smartstudybejava.repository.ExamRepository;
+import com.project.smartstudybejava.repository.ExpandContentRepository;
 import com.project.smartstudybejava.repository.QuestionRepository;
 import com.project.smartstudybejava.service.CloudinaryService;
 import com.project.smartstudybejava.service.ExamService;
@@ -17,9 +15,7 @@ import com.project.smartstudybejava.util.ErrorCode;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,8 +36,27 @@ public class ExamServiceImpl implements ExamService {
     QuestionRepository questionRepository;
     AnswerRepository answerRepository;
     CloudinaryService cloudinaryService;
+    ExpandContentRepository expandContentRepository;
 
-    public Exam createExam(ExamRequest examRequest) throws IOException {
+    public Exam createListeningExam(ExamRequest examRequest) throws IOException {
+        if(examRepository.existsByName(examRequest.getExamName())) {
+            throw new AppException(ErrorCode.EXAM_EXISTED.getCode(), ErrorCode.EXAM_EXISTED.getMessage());
+        }
+
+        Exam exam = new Exam();
+        exam.setName(examRequest.getExamName());
+        exam.setCreatedAt(LocalDate.now());
+
+        FileInfo listenFileUrl = cloudinaryService.saveMp3File(examRequest.getListenMp3File());
+        FileInfo pdfFileUrl = cloudinaryService.saveMp3File(examRequest.getListenPdfFile());
+        exam.setListenFileUrl(listenFileUrl);
+        exam.setPdfFileUrl(pdfFileUrl);
+        exam.setExamType(EExamType.LISTENING);
+        exam = examRepository.save(exam);
+        importListeningQuestionsFromExcel(exam, examRequest.getListenAnswerFile());
+        return exam;
+    }
+    public Exam createReadingExam(ExamRequest examRequest) throws IOException {
 
         if(examRepository.existsByName(examRequest.getExamName())) {
             throw new AppException(ErrorCode.EXAM_EXISTED.getCode(), ErrorCode.EXAM_EXISTED.getMessage());
@@ -51,24 +66,11 @@ public class ExamServiceImpl implements ExamService {
         exam.setName(examRequest.getExamName());
         exam.setCreatedAt(LocalDate.now());
 
-        if(examRequest.getGrammarFile() != null) {
-            exam.setExamType(EExamType.GRAMMAR);
-            exam = examRepository.save(exam);
-            importQuestionsFromExcel(exam, examRequest.getGrammarFile());
-        } else if (examRequest.getListenMp3File() != null && examRequest.getListenPdfFile() != null) {
-            FileInfo listenFileUrl = cloudinaryService.saveMp3File(examRequest.getListenMp3File());
-            FileInfo pdfFileUrl = cloudinaryService.saveMp3File(examRequest.getListenPdfFile());
-            exam.setListenFileUrl(listenFileUrl);
-            exam.setPdfFileUrl(pdfFileUrl);
-            exam.setExamType(EExamType.LISTENING);
-            exam = examRepository.save(exam);
-            importQuestionsFromExcel(exam, examRequest.getListenAnswerFile());
-        }
-        if (examRequest.getGrammarFile() == null && examRequest.getListenPdfFile() == null &&
-                examRequest.getListenMp3File() == null) {
-            exam.setExamType(EExamType.READING);
-            exam = examRepository.save(exam);
-        }
+        FileInfo pdfFileUrl = cloudinaryService.saveMp3File(examRequest.getReadingPdfFile());
+        exam.setExamType(EExamType.READING);
+        exam.setPdfFileUrl(pdfFileUrl);
+        exam = examRepository.save(exam);
+        importReadingQuestionsFromExcel(exam, examRequest.getReadingAnswerFile());
 
         return exam;
     }
@@ -106,29 +108,84 @@ public class ExamServiceImpl implements ExamService {
         return examResponse;
     }
 
-    private void importQuestionsFromExcel(Exam exam, MultipartFile file) throws IOException {
+    private void importListeningQuestionsFromExcel(Exam exam, MultipartFile file) throws IOException {
         InputStream inputStream = file.getInputStream();
         Workbook workbook = new XSSFWorkbook(inputStream);
         Sheet sheet = workbook.getSheetAt(0);
 
         for (Row row : sheet) {
-            String questionContent = row.getCell(0) != null ? row.getCell(0).getStringCellValue()
-                    : "";
-            String answer1 = row.getCell(1).getStringCellValue();
-            String answer2 = row.getCell(2).getStringCellValue();
-            String answer3 = row.getCell(3).getStringCellValue();
-            String answer4 = row.getCell(4).getStringCellValue();
-            int correctAnswerIndex = (int) row.getCell(5).getNumericCellValue();
+            if (row.getRowNum() < 1) {
+                continue;
+            }
+
+            int questionNumber = (int) row.getCell(0).getNumericCellValue();
+            String questionContent = row.getCell(1) != null ? row.getCell(1).getStringCellValue() : "";
+            String answer1 = row.getCell(2).getStringCellValue();
+            String answer2 = row.getCell(3).getStringCellValue();
+            String answer3 = row.getCell(4).getStringCellValue();
+            String answer4 = row.getCell(5).getStringCellValue();
+            int correctAnswerIndex = (int) row.getCell(6).getNumericCellValue();
 
             Question question = new Question();
+            question.setQuestionNumber(questionNumber);
             question.setContent(questionContent);
             question.setExam(exam);
             questionRepository.save(question);
 
-            createAnswer(answer1, correctAnswerIndex == 1, question);
-            createAnswer(answer2, correctAnswerIndex == 2, question);
-            createAnswer(answer3, correctAnswerIndex == 3, question);
-            createAnswer(answer4, correctAnswerIndex == 4, question);
+            createAnswer(answer1, correctAnswerIndex == 2, question);
+            createAnswer(answer2, correctAnswerIndex == 3, question);
+            createAnswer(answer3, correctAnswerIndex == 4, question);
+            createAnswer(answer4, correctAnswerIndex == 5, question);
+        }
+
+        workbook.close();
+    }
+    private void importReadingQuestionsFromExcel(Exam exam, MultipartFile file) throws IOException {
+        InputStream inputStream = file.getInputStream();
+        Workbook workbook = new XSSFWorkbook(inputStream);
+        Sheet sheet = workbook.getSheetAt(0);
+
+        ExpandContent currentExpandContent = null;
+
+        for (Row row : sheet) {
+            if (row.getRowNum() < 1) {
+                continue;
+            }
+            Cell expandContentCell = row.getCell(7);
+            if (expandContentCell != null) {
+                String expandContentText = expandContentCell.getStringCellValue();
+                if (!expandContentText.isEmpty()) {
+                    ExpandContent expandContent = new ExpandContent();
+                    expandContent.setContent(expandContentText);
+                    expandContentRepository.save(expandContent);
+
+                    currentExpandContent = expandContent;
+                } else {
+                    currentExpandContent = null;
+                }
+            }
+
+            int questionNumber = (int) row.getCell(0).getNumericCellValue();
+            String questionContent = row.getCell(1) != null ? row.getCell(1).getStringCellValue() : "";
+            String answer1 = row.getCell(2).getStringCellValue();
+            String answer2 = row.getCell(3).getStringCellValue();
+            String answer3 = row.getCell(4).getStringCellValue();
+            String answer4 = row.getCell(5).getStringCellValue();
+            int correctAnswerIndex = (int) row.getCell(6).getNumericCellValue();
+
+            Question question = new Question();
+            question.setExam(exam);
+            question.setQuestionNumber(questionNumber);
+            question.setContent(questionContent);
+            if (currentExpandContent != null) {
+                question.setExpandContent(currentExpandContent);
+            }
+            questionRepository.save(question);
+
+            createAnswer(answer1, correctAnswerIndex == 2, question);
+            createAnswer(answer2, correctAnswerIndex == 3, question);
+            createAnswer(answer3, correctAnswerIndex == 4, question);
+            createAnswer(answer4, correctAnswerIndex == 5, question);
         }
 
         workbook.close();
