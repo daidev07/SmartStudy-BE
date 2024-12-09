@@ -21,10 +21,21 @@ import java.util.List;
 public class ExamController {
     ExamService examService;
 
-    @PostMapping("/listening")
+    @PostMapping("")
     public ResponseData<Exam> createListeningExam(@ModelAttribute ExamRequest examRequest) {
         try {
-            Exam exam = examService.createListeningExam(examRequest);
+            Exam exam = null;
+            switch (examRequest.getExamType()) {
+                case "LISTENING" -> exam = examService.createListeningExam(examRequest);
+                case "READING" -> exam = examService.createReadingExam(examRequest);
+                case "GRAMMAR" -> exam = examService.createGrammarExam(examRequest);
+                default -> {
+                    return ResponseData.<Exam>builder()
+                            .code(ErrorCode.INVALID_EXAM_TYPE.getCode())
+                            .message(ErrorCode.INVALID_EXAM_TYPE.getMessage())
+                            .build();
+                }
+            }
             return ResponseData.<Exam>builder()
                     .code(SuccessCode.CREATE_EXAM_SUCCESSFUL.getCode())
                     .message(SuccessCode.CREATE_EXAM_SUCCESSFUL.getMessage())

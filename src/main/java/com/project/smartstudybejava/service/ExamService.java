@@ -11,6 +11,7 @@ import java.util.List;
 public interface ExamService {
     Exam  createListeningExam(ExamRequest examRequest) throws IOException;
     Exam createReadingExam(ExamRequest examRequest) throws IOException;
+    Exam createGrammarExam(ExamRequest examRequest) throws IOException;
     List<Exam> getAllExams();
 
     ExamResponse getExamByExamId(Long examId);

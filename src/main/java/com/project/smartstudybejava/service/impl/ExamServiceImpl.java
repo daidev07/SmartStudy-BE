@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,7 +56,6 @@ public class ExamServiceImpl implements ExamService {
         return exam;
     }
     public Exam createReadingExam(ExamRequest examRequest) throws IOException {
-
         if(examRepository.existsByName(examRequest.getExamName())) {
             throw new AppException(ErrorCode.EXAM_EXISTED.getCode(), ErrorCode.EXAM_EXISTED.getMessage());
         }
@@ -71,6 +69,20 @@ public class ExamServiceImpl implements ExamService {
         exam.setPdfFileUrl(pdfFileUrl);
         exam = examRepository.save(exam);
         importReadingQuestionsFromExcel(exam, examRequest.getReadingAnswerFile());
+
+        return exam;
+    }
+    public Exam createGrammarExam(ExamRequest examRequest) throws IOException {
+        if(examRepository.existsByName(examRequest.getExamName())) {
+            throw new AppException(ErrorCode.EXAM_EXISTED.getCode(), ErrorCode.EXAM_EXISTED.getMessage());
+        }
+
+        Exam exam = new Exam();
+        exam.setName(examRequest.getExamName());
+        exam.setCreatedAt(LocalDate.now());
+        exam.setExamType(EExamType.GRAMMAR);
+        exam = examRepository.save(exam);
+        importGrammarQuestionsFromExcel(exam, examRequest.getGrammarFile());
 
         return exam;
     }
@@ -190,7 +202,38 @@ public class ExamServiceImpl implements ExamService {
 
         workbook.close();
     }
+    private void importGrammarQuestionsFromExcel(Exam exam, MultipartFile grammarFile) throws IOException {
+        InputStream inputStream = grammarFile.getInputStream();
+        Workbook workbook = new XSSFWorkbook(inputStream);
+        Sheet sheet = workbook.getSheetAt(0);
 
+
+        for (Row row : sheet) {
+            if (row.getRowNum() < 1) {
+                continue;
+            }
+            int questionNumber = (int) row.getCell(0).getNumericCellValue();
+            String questionContent = row.getCell(1) != null ? row.getCell(1).getStringCellValue() : "";
+            String answer1 = row.getCell(2).getStringCellValue();
+            String answer2 = row.getCell(3).getStringCellValue();
+            String answer3 = row.getCell(4).getStringCellValue();
+            String answer4 = row.getCell(5).getStringCellValue();
+            int correctAnswerIndex = (int) row.getCell(6).getNumericCellValue();
+
+            Question question = new Question();
+            question.setExam(exam);
+            question.setQuestionNumber(questionNumber);
+            question.setContent(questionContent);
+            questionRepository.save(question);
+
+            createAnswer(answer1, correctAnswerIndex == 2, question);
+            createAnswer(answer2, correctAnswerIndex == 3, question);
+            createAnswer(answer3, correctAnswerIndex == 4, question);
+            createAnswer(answer4, correctAnswerIndex == 5, question);
+        }
+
+        workbook.close();
+    }
     private void createAnswer(String content, boolean isCorrect, Question question) {
         Answer answer = new Answer();
         answer.setContent(content);
