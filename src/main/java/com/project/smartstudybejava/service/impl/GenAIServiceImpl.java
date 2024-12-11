@@ -34,33 +34,29 @@ public class GenAIServiceImpl implements GenAIService {
     UserRepository userRepository;
     HistoryChatbotRepository historyChatbotRepository;
     MessageDetailsRepository messageDetailsRepository;
-    @Override
-    public TenseModel getTenseModelFromText(String question) {
-        return assistant.extractTenseFromText(question);
-    }
 
     @Override
     public String getResponseExtended(ChatRequestDTO chatRequestDTO) {
         List<ChatMessage> messages = new ArrayList<>();
-        messages.add(UserMessage.userMessage(chatRequestDTO.question()));
+        messages.add(UserMessage.userMessage(chatRequestDTO.getQuestion()));
 //        var model = OpenAiChatModel.builder()
 //                .apiKey("demo")
 //                .modelName(OpenAiChatModelName.GPT_4_O_MINI)
 //                .build();
 //        String answerBot = model.generate(messages).content().text();
-        String answerBot = ragAssistant.chat(chatRequestDTO.userId(), chatRequestDTO.question());
+        String answerBot = ragAssistant.chat(chatRequestDTO.getUserId(), chatRequestDTO.getQuestion());
 
-        userRepository.findById(chatRequestDTO.userId()).orElseThrow(
+        userRepository.findById(chatRequestDTO.getUserId()).orElseThrow(
                 () -> new AppException(ErrorCode.USER_NOT_FOUND.getCode(), ErrorCode.USER_NOT_FOUND.getMessage()));
 
-        HistoryChatbot historyChatbot = historyChatbotRepository.findByUserId(chatRequestDTO.userId())
+        HistoryChatbot historyChatbot = historyChatbotRepository.findByUserId(chatRequestDTO.getUserId())
                 .orElseGet(() -> historyChatbotRepository.save(
                         HistoryChatbot.builder()
-                                .user(User.builder().id(chatRequestDTO.userId()).build())
+                                .user(User.builder().id(chatRequestDTO.getUserId()).build())
                                 .build()
                 ));
 
-        String title = chatRequestDTO.question();
+        String title = chatRequestDTO.getQuestion();
         if (title.length() > 100) {
             title = title.substring(0, 100) + "...";
         }
@@ -70,7 +66,7 @@ public class GenAIServiceImpl implements GenAIService {
 
         messageDetailsRepository.save(MessageDetails.builder()
                 .historyChatbot(historyChatbot)
-                .messageUser(chatRequestDTO.question())
+                .messageUser(chatRequestDTO.getQuestion())
                 .messageBot(answerBot)
                 .respondedAt(LocalDateTime.now())
                 .build());
@@ -80,26 +76,22 @@ public class GenAIServiceImpl implements GenAIService {
     @Override
     public String getResponseFromIconAskAI(ChatRequestDTO chatRequestDTO) {
         List<ChatMessage> messages = new ArrayList<>();
-        messages.add(UserMessage.userMessage(chatRequestDTO.question()));
-//        var model = OpenAiChatModel.builder()
-//                .apiKey("demo")
-//                .modelName(OpenAiChatModelName.GPT_4_O_MINI)
-//                .build();
-//        String answerBot = model.generate(messages).content().text();
-        String answerBot = ragAssistant.getResponseFromIconAskAI(chatRequestDTO.userId(), chatRequestDTO.question(),
-                chatRequestDTO.expandedContent());
+        messages.add(UserMessage.userMessage(chatRequestDTO.getQuestion()));
+        String answerBot = ragAssistant.getResponseFromIconAskAI(
+                chatRequestDTO.getUserId(), chatRequestDTO.getQuestion(),
+                chatRequestDTO.getExpandContent(), chatRequestDTO.getAnswers());
 
-        userRepository.findById(chatRequestDTO.userId()).orElseThrow(
+        userRepository.findById(chatRequestDTO.getUserId()).orElseThrow(
                 () -> new AppException(ErrorCode.USER_NOT_FOUND.getCode(), ErrorCode.USER_NOT_FOUND.getMessage()));
 
-        HistoryChatbot historyChatbot = historyChatbotRepository.findByUserId(chatRequestDTO.userId())
+        HistoryChatbot historyChatbot = historyChatbotRepository.findByUserId(chatRequestDTO.getUserId())
                 .orElseGet(() -> historyChatbotRepository.save(
                         HistoryChatbot.builder()
-                                .user(User.builder().id(chatRequestDTO.userId()).build())
+                                .user(User.builder().id(chatRequestDTO.getUserId()).build())
                                 .build()
                 ));
 
-        String title = chatRequestDTO.question();
+        String title = chatRequestDTO.getQuestion();
         if (title.length() > 100) {
             title = title.substring(0, 100) + "...";
         }
@@ -109,7 +101,7 @@ public class GenAIServiceImpl implements GenAIService {
 
         messageDetailsRepository.save(MessageDetails.builder()
                 .historyChatbot(historyChatbot)
-                .messageUser(chatRequestDTO.question())
+                .messageUser(chatRequestDTO.getQuestion())
                 .messageBot(answerBot)
                 .respondedAt(LocalDateTime.now())
                 .build());

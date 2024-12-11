@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.stream.Collectors;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/chat")
@@ -25,12 +27,20 @@ public class GenerativeController  {
     }
     @PostMapping("/quick-ask-ai")
     public ChatResponseDTO getResponseFromIconAskAI(@RequestBody ChatRequestDTO chatRequestDTO) {
+        System.out.println("Received expandContent: " + chatRequestDTO.getExpandContent());
+        if (chatRequestDTO.getQuestion() != null) {
+            chatRequestDTO.setQuestion(chatRequestDTO.getQuestion().replace("\n", "\\n")
+                    .replace("\r", "\\r"));
+        }
+        if (chatRequestDTO.getExpandContent() != null) {
+            chatRequestDTO.setExpandContent(chatRequestDTO.getExpandContent().replace("\n", "\\n")
+                    .replace("\r", "\\r"));
+        }
+        if (chatRequestDTO.getAnswers() != null) {
+            chatRequestDTO.setAnswers(chatRequestDTO.getAnswers().replace("\n", "\\n")
+                    .replace("\r", "\\r"));
+        }
         return new ChatResponseDTO(genAIService.getResponseFromIconAskAI(chatRequestDTO));
-    }
-
-    @PostMapping("/tense")
-    public TenseModel getTenseModelFromText(@RequestBody ChatRequestDTO chatRequestDTO) {
-        return genAIService.getTenseModelFromText(chatRequestDTO.question());
     }
 
 }
