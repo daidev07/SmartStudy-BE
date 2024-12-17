@@ -13,6 +13,5 @@ public interface ExamService {
     Exam createReadingExam(ExamRequest examRequest) throws IOException;
     Exam createGrammarExam(ExamRequest examRequest) throws IOException;
     List<Exam> getAllExams();
-
-    ExamResponse getExamByExamId(Long examId);
+    Exam getExamByExamId(Long examId);
 }

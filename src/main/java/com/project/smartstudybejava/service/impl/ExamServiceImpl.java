@@ -1,7 +1,6 @@
 package com.project.smartstudybejava.service.impl;
 
 import com.project.smartstudybejava.dto.req.ExamRequest;
-import com.project.smartstudybejava.dto.res.ExamResponse;
 import com.project.smartstudybejava.entity.*;
 import com.project.smartstudybejava.enumeration.EExamType;
 import com.project.smartstudybejava.exception.AppException;
@@ -24,7 +23,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -93,31 +91,9 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public ExamResponse getExamByExamId(Long examId) {
-
-        Exam exam = examRepository.findById(examId).orElseThrow(() ->
+    public Exam getExamByExamId(Long examId) {
+        return examRepository.findById(examId).orElseThrow(() ->
                 new AppException(ErrorCode.EXAM_NOT_FOUND.getCode(), ErrorCode.EXAM_NOT_FOUND.getMessage()));
-
-        ExamResponse examResponse = ExamResponse.builder()
-                .id(exam.getId())
-                .name(exam.getName())
-                .createdAt(exam.getCreatedAt())
-                .questions(exam.getQuestions().stream()
-                        .map(question -> ExamResponse.QuestionResponse.builder()
-                                .id(question.getId())
-                                .content(question.getContent())
-                                .answers(question.getAnswers().stream()
-                                        .map(answer -> ExamResponse.AnswerResponse.builder()
-                                                .id(answer.getId())
-                                                .content(answer.getContent())
-                                                .isCorrect(answer.getIsCorrect())
-                                                .build())
-                                        .collect(Collectors.toList()))
-                                .build())
-                        .collect(Collectors.toList()))
-                .build();
-
-        return examResponse;
     }
 
     private void importListeningQuestionsFromExcel(Exam exam, MultipartFile file) throws IOException {
