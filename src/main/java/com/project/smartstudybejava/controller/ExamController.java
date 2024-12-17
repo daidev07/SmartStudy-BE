@@ -20,21 +20,10 @@ import java.util.List;
 public class ExamController {
     ExamService examService;
 
-    @PostMapping("")
+    @PostMapping("/listening")
     public ResponseData<Exam> createListeningExam(@ModelAttribute ExamRequest examRequest) {
         try {
-            Exam exam = null;
-            switch (examRequest.getExamType()) {
-                case "LISTENING" -> exam = examService.createListeningExam(examRequest);
-                case "READING" -> exam = examService.createReadingExam(examRequest);
-                case "GRAMMAR" -> exam = examService.createGrammarExam(examRequest);
-                default -> {
-                    return ResponseData.<Exam>builder()
-                            .code(ErrorCode.INVALID_EXAM_TYPE.getCode())
-                            .message(ErrorCode.INVALID_EXAM_TYPE.getMessage())
-                            .build();
-                }
-            }
+            Exam exam = examService.createListeningExam(examRequest);
             return ResponseData.<Exam>builder()
                     .code(SuccessCode.CREATE_EXAM_SUCCESSFUL.getCode())
                     .message(SuccessCode.CREATE_EXAM_SUCCESSFUL.getMessage())
@@ -51,6 +40,22 @@ public class ExamController {
     public ResponseData<Exam> createReadingExam(@ModelAttribute ExamRequest examRequest) {
         try {
             Exam exam = examService.createReadingExam(examRequest);
+            return ResponseData.<Exam>builder()
+                    .code(SuccessCode.CREATE_EXAM_SUCCESSFUL.getCode())
+                    .message(SuccessCode.CREATE_EXAM_SUCCESSFUL.getMessage())
+                    .data(exam)
+                    .build();
+        } catch (IOException e) {
+            return ResponseData.<Exam>builder()
+                    .code(ErrorCode.CREATE_EXAM_FAILED.getCode())
+                    .message(ErrorCode.CREATE_EXAM_FAILED.getMessage())
+                    .build();
+        }
+    }
+    @PostMapping("/grammar")
+    public ResponseData<Exam> createGrammarExam(@ModelAttribute ExamRequest examRequest) {
+        try {
+            Exam exam = examService.createGrammarExam(examRequest);
             return ResponseData.<Exam>builder()
                     .code(SuccessCode.CREATE_EXAM_SUCCESSFUL.getCode())
                     .message(SuccessCode.CREATE_EXAM_SUCCESSFUL.getMessage())
