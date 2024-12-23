@@ -20,6 +20,7 @@ public enum SuccessCode {
 
     POST_SUCCESSFUL(201, "Post successful" , HttpStatus.CREATED),
 
+    GET_REPORT_SUCCESSFUL(200, "Get report successful" , HttpStatus.OK),
     ;
 
     int code;

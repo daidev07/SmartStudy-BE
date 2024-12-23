@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 public class QuestionResponse {
-    private Long id;
-    private String content;
-    private List<AnswerResponse> answers;
+    Long id;
+    String content;
+    List<AnswerResponse> answers;
 }

@@ -10,9 +10,9 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 public class AnswerResultResponseDTO {
-    private Long id;
-    private Long userId;
-    private Long studentAssignmentId;
-    private Long questionId;
-    private Long answerId;
+    Long id;
+    Long userId;
+    Long studentAssignmentId;
+    Long questionId;
+    Long answerId;
 }
