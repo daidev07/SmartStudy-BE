@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -53,8 +54,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserResDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream()
+                .map(userMapper::toUserResponse)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -63,5 +67,20 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND.getCode(),
                         ErrorCode.USER_NOT_FOUND.getMessage()));
         return userMapper.toUserResponse(user);
+    }
+
+    @Override
+    public List<UserResDTO> getAllTeachers() {
+        List<User> teachers = userRepository.findByRole("TEACHER");
+        return teachers.stream()
+                .map(userMapper::toUserResponse)
+                .collect(Collectors.toList());
+    }
+    @Override
+    public List<UserResDTO> getAllAssistants() {
+        List<User> teachers = userRepository.findByRole("ASSISTANT");
+        return teachers.stream()
+                .map(userMapper::toUserResponse)
+                .collect(Collectors.toList());
     }
 }

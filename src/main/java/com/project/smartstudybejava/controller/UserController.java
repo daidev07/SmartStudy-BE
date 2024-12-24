@@ -29,8 +29,8 @@ public class UserController {
                 .build();
     }
     @GetMapping
-    public ResponseData<List<User>> getAllUsers() {
-        return ResponseData.<List<User>>builder()
+    public ResponseData<List<UserResDTO>> getAllUsers() {
+        return ResponseData.<List<UserResDTO>>builder()
                 .message(SuccessCode.GET_SUCCESSFUL.getMessage())
                 .data(userService.getAllUsers())
                 .build();
@@ -42,5 +42,18 @@ public class UserController {
                 .data(userService.getUserByUsername(userName))
                 .build();
     }
-
+    @GetMapping("/teachers")
+    public ResponseData<List<UserResDTO>> getAllTeachers() {
+        return ResponseData.<List<UserResDTO>>builder()
+                .message(SuccessCode.GET_SUCCESSFUL.getMessage())
+                .data(userService.getAllTeachers())
+                .build();
+    }
+    @GetMapping("/assistants")
+    public ResponseData<List<UserResDTO>> getAllAssistants() {
+        return ResponseData.<List<UserResDTO>>builder()
+                .message(SuccessCode.GET_SUCCESSFUL.getMessage())
+                .data(userService.getAllAssistants())
+                .build();
+    }
 }
