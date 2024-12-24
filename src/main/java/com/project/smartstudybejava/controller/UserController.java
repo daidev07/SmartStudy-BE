@@ -36,8 +36,8 @@ public class UserController {
                 .build();
     }
     @GetMapping("/{userName}")
-    public ResponseData<User> getUserByUsername(@PathVariable String userName) {
-        return ResponseData.<User>builder()
+    public ResponseData<UserResDTO> getUserByUsername(@PathVariable String userName) {
+        return ResponseData.<UserResDTO>builder()
                 .message(SuccessCode.GET_SUCCESSFUL.getMessage())
                 .data(userService.getUserByUsername(userName))
                 .build();

@@ -58,9 +58,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByUsername(String userName) {
-        return userRepository.findByUsername(userName)
+    public UserResDTO getUserByUsername(String userName) {
+        User user = userRepository.findByUsername(userName)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND.getCode(),
                         ErrorCode.USER_NOT_FOUND.getMessage()));
+        return userMapper.toUserResponse(user);
     }
 }

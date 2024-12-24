@@ -10,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -37,7 +38,8 @@ public class User {
     LocalDate dob;
     @Enumerated(EnumType.STRING)
     EStudyStatus studyStatus;
-
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    List<UserRole> userRoles;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
     String verificationCode;

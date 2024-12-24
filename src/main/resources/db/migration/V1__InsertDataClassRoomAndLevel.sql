@@ -10,6 +10,6 @@ INSERT INTO users (id, name, email, phone, username, password, classroom_id, stu
                    (5, 'Nguyen Tat Phu Cuong', 'cuongntp@gmail.com', '0123456793', 'cuongntp', '$2y$10$TWW/K7uAAJybJiGL2Ik9fexfw21Z862/wqXxPnr32mcYm7EivQ49.', null, null),
                    (6, 'Nguyen Nang Hung Van', 'vannnh@gmail.com', '0123456794', 'vannnh', '$2y$10$TWW/K7uAAJybJiGL2Ik9fexfw21Z862/wqXxPnr32mcYm7EivQ49.', null, null);
 
-INSERT INTO roles (id, name) VALUES (1, 'ROLE_USER'), (2, 'ROLE_TEACHER_ASSISTANT'), (3, 'ROLE_TEACHER');
+INSERT INTO roles (id, name) VALUES (1, 'USER'), (2, 'ASSISTANT'), (3, 'TEACHER');
 
 INSERT INTO user_roles (id, user_id, role_id) VALUES (1, 1, 1), (2, 2, 1), (3, 3, 1), (4, 4, 1), (5, 5, 2), (6, 6, 3);
