@@ -31,11 +31,8 @@ CREATE TABLE users
     classroom_id          BIGINT                NULL,
     dob                   date                  NULL,
     study_status          VARCHAR(255)          NULL,
+    role                  VARCHAR(255)          NULL,
     created_at            datetime              NULL,
-    updated_at            datetime              NULL,
-    verification_code     VARCHAR(255)          NULL,
-    reset_password_code   VARCHAR(255)          NULL,
-    reset_password_expiry VARCHAR(255)          NULL,
     CONSTRAINT pk_users PRIMARY KEY (id)
 );
 
@@ -58,26 +55,6 @@ CREATE TABLE files
     cloud_id    VARCHAR(255) NULL,
     CONSTRAINT pk_fileinfo PRIMARY KEY (id)
 );
-
-CREATE TABLE roles
-(
-    id   BIGINT AUTO_INCREMENT NOT NULL,
-    name VARCHAR(255)          NULL,
-    CONSTRAINT pk_roles PRIMARY KEY (id)
-);
-CREATE TABLE user_roles
-(
-    id      BIGINT AUTO_INCREMENT NOT NULL,
-    user_id BIGINT                NULL,
-    role_id BIGINT                NULL,
-    CONSTRAINT pk_user_roles PRIMARY KEY (id)
-);
-
-ALTER TABLE user_roles
-    ADD CONSTRAINT FK_USER_ROLES_ON_ROLE FOREIGN KEY (role_id) REFERENCES roles (id);
-
-ALTER TABLE user_roles
-    ADD CONSTRAINT FK_USER_ROLES_ON_USER FOREIGN KEY (user_id) REFERENCES users (id);
 
 CREATE TABLE exams
 (

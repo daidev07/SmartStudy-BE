@@ -1,8 +1,8 @@
 package com.project.smartstudybejava.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.project.smartstudybejava.enumeration.ERole;
 import com.project.smartstudybejava.enumeration.EStudyStatus;
-import dev.langchain4j.data.message.ToolExecutionResultMessage;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -38,11 +38,7 @@ public class User {
     LocalDate dob;
     @Enumerated(EnumType.STRING)
     EStudyStatus studyStatus;
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    List<UserRole> userRoles;
+    @Enumerated(EnumType.STRING)
+    ERole role;
     LocalDateTime createdAt;
-    LocalDateTime updatedAt;
-    String verificationCode;
-    String resetPasswordCode;
-    String resetPasswordExpiry;
 }

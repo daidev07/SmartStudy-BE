@@ -1,7 +1,7 @@
 package com.project.smartstudybejava.dto.res;
 
 import com.project.smartstudybejava.entity.Classroom;
-import com.project.smartstudybejava.entity.UserRole;
+import com.project.smartstudybejava.enumeration.ERole;
 import com.project.smartstudybejava.enumeration.EStudyStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,5 +25,5 @@ public class UserResDTO {
     Classroom classroom;
     LocalDate dob;
     EStudyStatus studyStatus;
-    String userRole;
+    ERole role;
 }

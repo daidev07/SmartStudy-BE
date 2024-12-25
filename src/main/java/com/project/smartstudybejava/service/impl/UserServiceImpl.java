@@ -4,6 +4,7 @@ import com.project.smartstudybejava.dto.req.UserCreationReqDTO;
 import com.project.smartstudybejava.dto.res.UserResDTO;
 import com.project.smartstudybejava.entity.Classroom;
 import com.project.smartstudybejava.entity.User;
+import com.project.smartstudybejava.enumeration.ERole;
 import com.project.smartstudybejava.exception.AppException;
 import com.project.smartstudybejava.exception.ResourceNotFoundException;
 import com.project.smartstudybejava.mapper.UserMapper;
@@ -35,10 +36,18 @@ public class UserServiceImpl implements UserService {
     public UserResDTO createUser(UserCreationReqDTO userCreationReqDTO) {
         User user = userMapper.toUserEntity(userCreationReqDTO);
 
-        if (userCreationReqDTO.getClassroomId() != null) {
-            Classroom classroom = classroomRepository.findById(Long.valueOf(userCreationReqDTO.getClassroomId()))
-                    .orElseThrow(() -> new ResourceNotFoundException("Classroom not found"));
-            user.setClassroom(classroom);
+        if (user.getRole() == ERole.TEACHER) {
+            user.setRole(ERole.TEACHER);
+        }
+        else if (user.getRole() == ERole.ASSISTANT) {
+            user.setRole(ERole.ASSISTANT);
+        } else {
+            user.setRole(ERole.STUDENT);
+            if (userCreationReqDTO.getClassroomId() != null) {
+                Classroom classroom = classroomRepository.findById(Long.valueOf(userCreationReqDTO.getClassroomId()))
+                        .orElseThrow(() -> new ResourceNotFoundException("Classroom not found"));
+                user.setClassroom(classroom);
+            }
         }
 
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
@@ -71,15 +80,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserResDTO> getAllTeachers() {
-        List<User> teachers = userRepository.findByRole("TEACHER");
+        List<User> teachers = userRepository.findByRole(ERole.TEACHER);
         return teachers.stream()
                 .map(userMapper::toUserResponse)
                 .collect(Collectors.toList());
     }
     @Override
     public List<UserResDTO> getAllAssistants() {
-        List<User> teachers = userRepository.findByRole("ASSISTANT");
-        return teachers.stream()
+        List<User> assistants = userRepository.findByRole(ERole.ASSISTANT);
+        return assistants.stream()
                 .map(userMapper::toUserResponse)
                 .collect(Collectors.toList());
     }
