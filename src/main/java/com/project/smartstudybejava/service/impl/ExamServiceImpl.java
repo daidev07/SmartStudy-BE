@@ -105,8 +105,11 @@ public class ExamServiceImpl implements ExamService {
             if (row.getRowNum() < 1) {
                 continue;
             }
-
-            int questionNumber = (int) row.getCell(0).getNumericCellValue();
+            Cell questionNumberCell = row.getCell(0);
+            if (questionNumberCell == null || questionNumberCell.getCellType() != CellType.NUMERIC) {
+                break;
+            }
+            int questionNumber = (int) questionNumberCell.getNumericCellValue();
             String questionContent = row.getCell(1) != null ? row.getCell(1).getStringCellValue() : "";
             String answer1 = row.getCell(2).getStringCellValue();
             String answer2 = row.getCell(3).getStringCellValue();
@@ -120,10 +123,10 @@ public class ExamServiceImpl implements ExamService {
             question.setExam(exam);
             questionRepository.save(question);
 
-            createAnswer(answer1, correctAnswerIndex == 2, question);
-            createAnswer(answer2, correctAnswerIndex == 3, question);
-            createAnswer(answer3, correctAnswerIndex == 4, question);
-            createAnswer(answer4, correctAnswerIndex == 5, question);
+            createAnswer(answer1, correctAnswerIndex == 3, question);
+            createAnswer(answer2, correctAnswerIndex == 4, question);
+            createAnswer(answer3, correctAnswerIndex == 5, question);
+            createAnswer(answer4, correctAnswerIndex == 6, question);
         }
 
         workbook.close();
@@ -152,7 +155,10 @@ public class ExamServiceImpl implements ExamService {
                     currentExpandContent = null;
                 }
             }
-
+            Cell questionNumberCell = row.getCell(0);
+            if (questionNumberCell == null || questionNumberCell.getCellType() != CellType.NUMERIC) {
+                break;
+            }
             int questionNumber = (int) row.getCell(0).getNumericCellValue();
             String questionContent = row.getCell(1) != null ? row.getCell(1).getStringCellValue() : "";
             String answer1 = row.getCell(2).getStringCellValue();
@@ -170,10 +176,10 @@ public class ExamServiceImpl implements ExamService {
             }
             questionRepository.save(question);
 
-            createAnswer(answer1, correctAnswerIndex == 2, question);
-            createAnswer(answer2, correctAnswerIndex == 3, question);
-            createAnswer(answer3, correctAnswerIndex == 4, question);
-            createAnswer(answer4, correctAnswerIndex == 5, question);
+            createAnswer(answer1, correctAnswerIndex == 3, question);
+            createAnswer(answer2, correctAnswerIndex == 4, question);
+            createAnswer(answer3, correctAnswerIndex == 5, question);
+            createAnswer(answer4, correctAnswerIndex == 6, question);
         }
 
         workbook.close();
@@ -188,7 +194,11 @@ public class ExamServiceImpl implements ExamService {
             if (row.getRowNum() < 1) {
                 continue;
             }
-            int questionNumber = (int) row.getCell(0).getNumericCellValue();
+            Cell questionNumberCell = row.getCell(0);
+            if (questionNumberCell == null || questionNumberCell.getCellType() != CellType.NUMERIC) {
+                break;
+            }
+            int questionNumber = (int) questionNumberCell.getNumericCellValue();
             String questionContent = row.getCell(1) != null ? row.getCell(1).getStringCellValue() : "";
             String answer1 = row.getCell(2).getStringCellValue();
             String answer2 = row.getCell(3).getStringCellValue();
@@ -202,10 +212,10 @@ public class ExamServiceImpl implements ExamService {
             question.setContent(questionContent);
             questionRepository.save(question);
 
-            createAnswer(answer1, correctAnswerIndex == 2, question);
-            createAnswer(answer2, correctAnswerIndex == 3, question);
-            createAnswer(answer3, correctAnswerIndex == 4, question);
-            createAnswer(answer4, correctAnswerIndex == 5, question);
+            createAnswer(answer1, correctAnswerIndex == 3, question);
+            createAnswer(answer2, correctAnswerIndex == 4, question);
+            createAnswer(answer3, correctAnswerIndex == 5, question);
+            createAnswer(answer4, correctAnswerIndex == 6, question);
         }
 
         workbook.close();

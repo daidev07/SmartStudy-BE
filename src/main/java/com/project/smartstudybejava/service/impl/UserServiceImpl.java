@@ -35,30 +35,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResDTO createUser(UserCreationReqDTO userCreationReqDTO) {
         User user = userMapper.toUserEntity(userCreationReqDTO);
-
-        if (user.getRole() == ERole.TEACHER) {
+        if(user.getRole() == ERole.TEACHER) {
             user.setRole(ERole.TEACHER);
-        }
-        else if (user.getRole() == ERole.ASSISTANT) {
+        } else if (user.getRole() == ERole.ASSISTANT) {
             user.setRole(ERole.ASSISTANT);
         } else {
             user.setRole(ERole.STUDENT);
-            if (userCreationReqDTO.getClassroomId() != null) {
-                Classroom classroom = classroomRepository.findById(Long.valueOf(userCreationReqDTO.getClassroomId()))
-                        .orElseThrow(() -> new ResourceNotFoundException("Classroom not found"));
-                user.setClassroom(classroom);
-            }
+            Classroom classroom = classroomRepository.findById(Long.valueOf(userCreationReqDTO.getClassroomId()))
+                    .orElseThrow(() -> new ResourceNotFoundException("Classroom not found"));
+            user.setClassroom(classroom);
         }
 
+        if(!user.getUsername().isEmpty()) {
+            String username = user.getUsername();
+            if (userRepository.existsByUsername(username)) {
+                throw new AppException(ErrorCode.USER_EXISTED.getCode(), ErrorCode.USER_EXISTED.getMessage());
+            }
+        }
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         user.setPassword(passwordEncoder.encode((user.getPassword())));
         user.setCreatedAt(LocalDateTime.now());
 
-        try {
-            user = userRepository.save(user);
-        } catch (Exception e) {
-            throw new AppException(400, ErrorCode.USER_EXISTED.getMessage());
-        }
+        user = userRepository.save(user);
         return userMapper.toUserResponse(user);
     }
 

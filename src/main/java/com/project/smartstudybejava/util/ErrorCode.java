@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
     IMAGE_OVERSIZE(400, "Image oversize", HttpStatus.BAD_REQUEST),
 
-    USER_EXISTED(400, "User existed", HttpStatus.BAD_REQUEST),
+    USER_EXISTED(413, "User existed", HttpStatus.BAD_REQUEST),
     USER_NOT_FOUND(404, "User not found", HttpStatus.NOT_FOUND),
 
     UNDEFINED_STUDY_STATUS(404, "Undefined study status enum", HttpStatus.BAD_REQUEST),
