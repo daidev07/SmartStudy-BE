@@ -71,7 +71,8 @@ public class ExamController {
     @GetMapping
     public ResponseData<List<Exam>> getAllExams() {
         return ResponseData.<List<Exam>>builder()
-                .message(SuccessCode.GET_SUCCESSFUL.getMessage())
+                .code(SuccessCode.GET_ALL_EXAM_SUCCESSFUL.getCode())
+                .message(SuccessCode.GET_ALL_EXAM_SUCCESSFUL.getMessage())
                 .data(examService.getAllExams())
                 .build();
     }
@@ -79,6 +80,7 @@ public class ExamController {
     @GetMapping("/{examId}")
     public ResponseData<Exam> getExamByExamId(@PathVariable Long examId) {
         return ResponseData.<Exam>builder()
+                .code(SuccessCode.GET_EXAM_SUCCESSFUL.getCode())
                 .message(SuccessCode.GET_EXAM_SUCCESSFUL.getMessage())
                 .data(examService.getExamByExamId(examId))
                 .build();

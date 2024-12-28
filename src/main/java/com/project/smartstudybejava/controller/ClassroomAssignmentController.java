@@ -20,11 +20,12 @@ public class ClassroomAssignmentController {
 
     ClassroomAssignmentService classroomAssignmentService;
 
-    @PostMapping("/assign/{classroomId}/{examId}")
+    @PostMapping("/class/{classroomId}/exam/{examId}")
     public ResponseData<ClassroomAssignment> assignToClassroom(@PathVariable Long classroomId,
                                                                @PathVariable Long examId,
                                                                @RequestBody AssignmentRequest request) {
         return ResponseData.<ClassroomAssignment>builder()
+                .code(SuccessCode.ASSIGN_SUCCESSFUL.getCode())
                 .message(SuccessCode.ASSIGN_SUCCESSFUL.getMessage())
                 .data(classroomAssignmentService.assignToClassroom(classroomId, examId,
                         request.getName(), request.getDescription(), request.getDueDate(),
@@ -35,6 +36,7 @@ public class ClassroomAssignmentController {
     @GetMapping("/class/{classroomId}")
     public ResponseData<List<ClassroomAssignment>> getListClassroomAssignmentByClassroomId(@PathVariable Long classroomId) {
         return ResponseData.<List<ClassroomAssignment>>builder()
+                .code(SuccessCode.GET_ASSIGNMENT_SUCCESSFUL.getCode())
                 .message(SuccessCode.GET_ASSIGNMENT_SUCCESSFUL.getMessage())
                 .data(classroomAssignmentService.getListClassroomAssignmentByClassroomId(classroomId))
                 .build();

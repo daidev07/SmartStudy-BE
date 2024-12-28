@@ -9,4 +9,5 @@ import java.util.List;
 public interface ClassroomRepository extends JpaRepository<Classroom, Long> {
     @NotNull
     List<Classroom> findAll();
+    Classroom findByClassName(String className);
 }

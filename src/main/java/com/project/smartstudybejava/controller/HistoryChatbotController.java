@@ -25,7 +25,8 @@ public class HistoryChatbotController {
     @GetMapping("/user/{userId}")
     public ResponseData<Optional<HistoryChatbot>> getHistoryChatbotByUserId(@PathVariable Long userId) {
         return ResponseData.<Optional<HistoryChatbot>>builder()
-                .message(SuccessCode.GET_SUCCESSFUL.getMessage())
+                .code(SuccessCode.GET_HISTORY_CHATBOT_SUCCESSFUL.getCode())
+                .message(SuccessCode.GET_HISTORY_CHATBOT_SUCCESSFUL.getMessage())
                 .data(historyChatbotService.getHistoryChatbotByUserId(userId))
                 .build();
     }

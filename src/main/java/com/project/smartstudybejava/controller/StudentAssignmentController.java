@@ -25,6 +25,7 @@ public class StudentAssignmentController {
     @GetMapping("/user/{userId}")
     public ResponseData<List<StudentAssignment>> getAssignmentByUserId(@PathVariable Long userId) {
         return ResponseData.<List<StudentAssignment>>builder()
+                .code(SuccessCode.GET_ASSIGNMENT_SUCCESSFUL.getCode())
                 .message(SuccessCode.GET_ASSIGNMENT_SUCCESSFUL.getMessage())
                 .data(studentAssignmentService.getAssignmentByUserId(userId))
                 .build();
@@ -32,6 +33,7 @@ public class StudentAssignmentController {
     @GetMapping("/{assignmentId}")
     public ResponseData<StudentAssignment> getAssignmentById(@PathVariable Long assignmentId) {
         return ResponseData.<StudentAssignment>builder()
+                .code(SuccessCode.GET_ASSIGNMENT_SUCCESSFUL.getCode())
                 .message(SuccessCode.GET_ASSIGNMENT_SUCCESSFUL.getMessage())
                 .data(studentAssignmentService.getAssignmentById(assignmentId))
                 .build();

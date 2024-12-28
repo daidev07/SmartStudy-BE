@@ -1,23 +1,12 @@
 CREATE DATABASE IF NOT EXISTS smart_study;
 USE smart_study;
 
-CREATE TABLE levels
-(
-    id   BIGINT AUTO_INCREMENT NOT NULL,
-    name VARCHAR(255)          NULL,
-    CONSTRAINT pk_levels PRIMARY KEY (id)
-);
-
 CREATE TABLE classrooms
 (
     id       BIGINT AUTO_INCREMENT NOT NULL,
-    name     VARCHAR(255)          NULL,
-    level_id BIGINT                NULL,
+    class_name     VARCHAR(255)          NULL,
     CONSTRAINT pk_classrooms PRIMARY KEY (id)
 );
-
-ALTER TABLE classrooms
-    ADD CONSTRAINT FK_CLASSROOMS_ON_LEVEL FOREIGN KEY (level_id) REFERENCES levels (id);
 
 CREATE TABLE users
 (

@@ -24,35 +24,40 @@ public class UserController {
     @PostMapping
     public ResponseData<UserResDTO> createUser(@RequestBody UserCreationReqDTO userCreationReqDTO) {
         return ResponseData.<UserResDTO>builder()
-                .message(SuccessCode.CREATED.getMessage())
+                .code(SuccessCode.USER_CREATED_SUCCESSFUL.getCode())
+                .message(SuccessCode.USER_CREATED_SUCCESSFUL.getMessage())
                 .data(userService.createUser(userCreationReqDTO))
                 .build();
     }
     @GetMapping
     public ResponseData<List<UserResDTO>> getAllUsers() {
         return ResponseData.<List<UserResDTO>>builder()
-                .message(SuccessCode.GET_SUCCESSFUL.getMessage())
+                .code(SuccessCode.GET_ALL_USER_SUCCESSFUL.getCode())
+                .message(SuccessCode.GET_ALL_USER_SUCCESSFUL.getMessage())
                 .data(userService.getAllUsers())
                 .build();
     }
     @GetMapping("/{userName}")
     public ResponseData<UserResDTO> getUserByUsername(@PathVariable String userName) {
         return ResponseData.<UserResDTO>builder()
-                .message(SuccessCode.GET_SUCCESSFUL.getMessage())
+                .code(SuccessCode.GET_USER_SUCCESSFUL.getCode())
+                .message(SuccessCode.GET_USER_SUCCESSFUL.getMessage())
                 .data(userService.getUserByUsername(userName))
                 .build();
     }
     @GetMapping("/teachers")
     public ResponseData<List<UserResDTO>> getAllTeachers() {
         return ResponseData.<List<UserResDTO>>builder()
-                .message(SuccessCode.GET_SUCCESSFUL.getMessage())
+                .code(SuccessCode.GET_ALL_TEACHERS_SUCCESSFUL.getCode())
+                .message(SuccessCode.GET_ALL_TEACHERS_SUCCESSFUL.getMessage())
                 .data(userService.getAllTeachers())
                 .build();
     }
     @GetMapping("/assistants")
     public ResponseData<List<UserResDTO>> getAllAssistants() {
         return ResponseData.<List<UserResDTO>>builder()
-                .message(SuccessCode.GET_SUCCESSFUL.getMessage())
+                .code(SuccessCode.GET_ALL_ASSISTANTS_SUCCESSFUL.getCode())
+                .message(SuccessCode.GET_ALL_ASSISTANTS_SUCCESSFUL.getMessage())
                 .data(userService.getAllAssistants())
                 .build();
     }

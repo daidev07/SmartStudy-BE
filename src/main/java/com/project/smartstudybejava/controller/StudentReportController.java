@@ -22,6 +22,7 @@ public class StudentReportController {
     @GetMapping("/user/{userId}")
     public ResponseData<StudentReportResponse> getReportByUserId(@PathVariable Long userId) {
         return ResponseData.<StudentReportResponse>builder()
+                .code(SuccessCode.GET_REPORT_SUCCESSFUL.getCode())
                 .message(SuccessCode.GET_REPORT_SUCCESSFUL.getMessage())
                 .data(studentReportService.getReportByUserId(userId))
                 .build();

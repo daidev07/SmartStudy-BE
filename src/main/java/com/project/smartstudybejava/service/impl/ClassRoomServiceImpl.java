@@ -1,8 +1,13 @@
 package com.project.smartstudybejava.service.impl;
 
+import com.project.smartstudybejava.dto.req.ClassroomRequest;
+import com.project.smartstudybejava.dto.res.ClassroomResponse;
 import com.project.smartstudybejava.entity.Classroom;
+import com.project.smartstudybejava.exception.AppException;
+import com.project.smartstudybejava.mapper.ClassroomMapper;
 import com.project.smartstudybejava.repository.ClassroomRepository;
 import com.project.smartstudybejava.service.ClassRoomService;
+import com.project.smartstudybejava.util.ErrorCode;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -15,11 +20,25 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ClassRoomServiceImpl implements ClassRoomService {
 
-    private final ClassroomRepository classroomRepository;
+    ClassroomRepository classroomRepository;
+    ClassroomMapper classroomMapper;
 
     @Override
     public List<Classroom> getAllClassroom() {
         return classroomRepository.findAll();
+    }
+
+    @Override
+    public ClassroomResponse createClassroom(ClassroomRequest classroomRequest) {
+        Classroom isClassroomExisted =
+                classroomRepository.findByClassName(classroomRequest.getClassName().trim().toLowerCase());
+        if (isClassroomExisted != null) {
+            throw new AppException(ErrorCode.CLASSROOM_EXISTED.getCode(), ErrorCode.CLASSROOM_EXISTED.getMessage());
+        } else {
+            Classroom classroom = classroomMapper.toClassroomEntity(classroomRequest);
+            Classroom savedClassroom = classroomRepository.save(classroom);
+            return classroomMapper.toClassroomResponse(savedClassroom);
+        }
     }
 
     @Override

@@ -1,6 +1,4 @@
-INSERT INTO levels (id, name) VALUES (1, '1'), (2, '2'), (3, '3');
-
-INSERT INTO classrooms (id, name, level_id) VALUES (1, 'KN234', 1), (2, 'KN246', 2);
+INSERT INTO classrooms (id, class_name) VALUES (1, 'KN234'), (2, 'KN246');
 
 INSERT INTO users (id, name, email, phone, username, password, classroom_id, study_status, role)
             VALUES (1, 'Ho Xuan Dai', 'daihx@gmail.com', '0123456789', 'daihx', '$2y$10$TWW/K7uAAJybJiGL2Ik9fexfw21Z862/wqXxPnr32mcYm7EivQ49.', 1, 'IN_PROGRESS', 'STUDENT'),

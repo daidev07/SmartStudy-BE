@@ -12,8 +12,7 @@ import lombok.experimental.FieldDefaults;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 public class ResponseData<T> {
-    @Builder.Default
-    int code = 200;
+    int code;
     String message;
     T data;
 }
