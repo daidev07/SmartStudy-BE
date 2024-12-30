@@ -1,9 +1,9 @@
 package com.project.smartstudybejava.controller;
 
 import com.project.smartstudybejava.entity.FileInfo;
-import com.project.smartstudybejava.entity.NewFeed;
+import com.project.smartstudybejava.entity.NewsFeed;
 import com.project.smartstudybejava.service.CloudinaryService;
-import com.project.smartstudybejava.service.NewFeedService;
+import com.project.smartstudybejava.service.NewsFeedService;
 import com.project.smartstudybejava.util.ResponseData;
 import com.project.smartstudybejava.util.SuccessCode;
 import lombok.RequiredArgsConstructor;
@@ -15,14 +15,14 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/newfeed")
+@RequestMapping("/api/newsfeed")
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
-public class NewFeedController {
-    NewFeedService newFeedService;
+public class NewsFeedController {
+    NewsFeedService newsFeedService;
     CloudinaryService cloudinaryService;
     @PostMapping("/class/{classId}")
-    public ResponseData<NewFeed> postToClass(
+    public ResponseData<NewsFeed> postToClass(
             @PathVariable Long classId,
             @RequestParam String content,
             @RequestParam Long userId,
@@ -31,16 +31,16 @@ public class NewFeedController {
         if (image != null && !image.isEmpty()) {
             fileInfo = cloudinaryService.saveFile(image);
         }
-        NewFeed newFeed = newFeedService.postToClass(classId, content, userId, fileInfo);
-        return ResponseData.<NewFeed>builder()
+        NewsFeed newsFeed = newsFeedService.postToClass(classId, content, userId, fileInfo);
+        return ResponseData.<NewsFeed>builder()
                 .code(SuccessCode.POST_SUCCESSFUL.getCode())
                 .message(SuccessCode.POST_SUCCESSFUL.getMessage())
-                .data(newFeed)
+                .data(newsFeed)
                 .build();
     }
 
     @PostMapping("/all")
-    public ResponseData<List<NewFeed>> postToAllClasses(
+    public ResponseData<List<NewsFeed>> postToAllClasses(
             @RequestParam String content,
             @RequestParam Long userId,
             @RequestParam(required = false) MultipartFile image) throws IOException {
@@ -48,21 +48,21 @@ public class NewFeedController {
         if (image != null && !image.isEmpty()) {
             fileInfo = cloudinaryService.saveFile(image);
         }
-        List<NewFeed> newFeeds = newFeedService.postToAllClasses(content, userId, fileInfo);
-        return ResponseData.<List<NewFeed>>builder()
+        List<NewsFeed> newsFeeds = newsFeedService.postToAllClasses(content, userId, fileInfo);
+        return ResponseData.<List<NewsFeed>>builder()
                 .code(SuccessCode.POST_SUCCESSFUL.getCode())
                 .message(SuccessCode.POST_SUCCESSFUL.getMessage())
-                .data(newFeeds)
+                .data(newsFeeds)
                 .build();
     }
 
     @GetMapping("/class/{classId}")
-    public ResponseData<List<NewFeed>> getNewFeedsByClass(@PathVariable Long classId) {
-        List<NewFeed> newFeeds = newFeedService.getNewFeedsByClass(classId);
-        return ResponseData.<List<NewFeed>>builder()
+    public ResponseData<List<NewsFeed>> getNewFeedsByClass(@PathVariable Long classId) {
+        List<NewsFeed> newsFeeds = newsFeedService.getNewFeedsByClass(classId);
+        return ResponseData.<List<NewsFeed>>builder()
                 .code(SuccessCode.GET_SUCCESSFUL.getCode())
                 .message(SuccessCode.GET_SUCCESSFUL.getMessage())
-                .data(newFeeds)
+                .data(newsFeeds)
                 .build();
     }
 }

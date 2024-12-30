@@ -9,7 +9,7 @@ import java.util.Map;
 @Component
 
 public class FileUploadUtil {
-    public static final String IMAGE_UPLOAD_FOLDER = "user-avatars";
+    public static final String IMAGE_UPLOAD_FOLDER = "img-files";
     public static final String AUDIO_UPLOAD_FOLDER = "audio-files";
 
     public Map<String, Object> buildImageUploadParams(FileInfo file) {

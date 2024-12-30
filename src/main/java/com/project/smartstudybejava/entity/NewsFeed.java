@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Table(name = "newfeeds")
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
-public class NewFeed {
+public class NewsFeed {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     Long id;

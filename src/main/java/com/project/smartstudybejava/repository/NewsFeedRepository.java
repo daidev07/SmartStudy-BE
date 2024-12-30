@@ -1,13 +1,13 @@
 package com.project.smartstudybejava.repository;
 
-import com.project.smartstudybejava.entity.NewFeed;
+import com.project.smartstudybejava.entity.NewsFeed;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface NewFeedRepository extends JpaRepository<NewFeed, Long> {
+public interface NewsFeedRepository extends JpaRepository<NewsFeed, Long> {
 
-    List<NewFeed> findByClassroomId(Long classId);
+    List<NewsFeed> findByClassroomId(Long classId);
 }
