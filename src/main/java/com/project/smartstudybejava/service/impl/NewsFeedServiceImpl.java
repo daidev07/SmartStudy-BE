@@ -40,7 +40,7 @@ public class NewsFeedServiceImpl implements NewsFeedService {
         newsFeed.setUser(user);
         newsFeed.setClassroom(classroom);
         if (image != null) {
-            newsFeed.setImageUrl(image.getFileUrl());
+            newsFeed.setImageFile(image.getFileUrl());
         }
         newsFeed.setPostedAt(LocalDateTime.now());
         newsFeed.setLikes(0L);
@@ -62,7 +62,7 @@ public class NewsFeedServiceImpl implements NewsFeedService {
             newsFeed.setUser(user);
             newsFeed.setClassroom(classroom);
             if (image != null) {
-                newsFeed.setImageUrl(image.getFileUrl());
+                newsFeed.setImageFile(image.getFileUrl());
             }
             newsFeed.setPostedAt(LocalDateTime.now());
             newsFeed.setLikes(0L);

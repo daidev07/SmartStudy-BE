@@ -14,14 +14,14 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "newfeeds")
+@Table(name = "newsfeeds")
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 public class NewsFeed {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     Long id;
     String content;
-    String imageUrl;
+    String imageFile;
     LocalDateTime postedAt;
     @ManyToOne
     User user;

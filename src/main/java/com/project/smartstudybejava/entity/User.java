@@ -27,7 +27,7 @@ public class User {
     String name;
     @Column(unique = true)
     String email;
-    String avatarUrl;
+    String avatarFile;
     String phone;
     @Column(unique = true)
     String username;

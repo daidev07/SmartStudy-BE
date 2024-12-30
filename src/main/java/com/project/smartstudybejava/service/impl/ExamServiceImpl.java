@@ -46,8 +46,8 @@ public class ExamServiceImpl implements ExamService {
 
         FileInfo listenFileUrl = cloudinaryService.saveMp3File(examRequest.getListenMp3File());
         FileInfo pdfFileUrl = cloudinaryService.saveMp3File(examRequest.getListenPdfFile());
-        exam.setListenFileUrl(listenFileUrl);
-        exam.setPdfFileUrl(pdfFileUrl);
+        exam.setListenFile(listenFileUrl);
+        exam.setPdfFile(pdfFileUrl);
         exam.setExamType(EExamType.LISTENING);
         exam = examRepository.save(exam);
         importListeningQuestionsFromExcel(exam, examRequest.getListenAnswerFile());
@@ -64,7 +64,7 @@ public class ExamServiceImpl implements ExamService {
 
         FileInfo pdfFileUrl = cloudinaryService.saveMp3File(examRequest.getReadingPdfFile());
         exam.setExamType(EExamType.READING);
-        exam.setPdfFileUrl(pdfFileUrl);
+        exam.setPdfFile(pdfFileUrl);
         exam = examRepository.save(exam);
         importReadingQuestionsFromExcel(exam, examRequest.getReadingAnswerFile());
 

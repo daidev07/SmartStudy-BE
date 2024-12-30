@@ -31,9 +31,9 @@ public class Exam {
     List<Question> questions;
 
     @OneToOne(cascade = CascadeType.ALL)
-    FileInfo listenFileUrl;
+    FileInfo listenFile;
     @OneToOne(cascade = CascadeType.ALL)
-    FileInfo pdfFileUrl;
+    FileInfo pdfFile;
     @Enumerated(EnumType.STRING)
     EExamType examType;
 

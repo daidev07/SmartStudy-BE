@@ -13,7 +13,7 @@ CREATE TABLE users
     id                    BIGINT AUTO_INCREMENT NOT NULL,
     name                  VARCHAR(255)          NULL,
     email                 VARCHAR(255)          NULL,
-    avatar_url            VARCHAR(255)          NULL,
+    avatar_file            VARCHAR(255)          NULL,
     phone                 VARCHAR(255)          NULL,
     username              VARCHAR(255)          NULL,
     password              VARCHAR(255)          NULL,
@@ -50,17 +50,17 @@ CREATE TABLE exams
     id                 BIGINT AUTO_INCREMENT NOT NULL,
     name               VARCHAR(255)          NULL,
     created_at         date                  NULL,
-    listen_file_url_id VARCHAR(255)          NULL,
-    pdf_file_url_id    VARCHAR(255)          NULL,
+    listen_file_id VARCHAR(255)          NULL,
+    pdf_file_id    VARCHAR(255)          NULL,
     exam_type          VARCHAR(255)          NULL,
     CONSTRAINT pk_exams PRIMARY KEY (id)
 );
 
 ALTER TABLE exams
-    ADD CONSTRAINT FK_EXAMS_ON_LISTENFILEURL FOREIGN KEY (listen_file_url_id) REFERENCES files (id);
+    ADD CONSTRAINT FK_EXAMS_ON_LISTENFILEURL FOREIGN KEY (listen_file_id) REFERENCES files (id);
 
 ALTER TABLE exams
-    ADD CONSTRAINT FK_EXAMS_ON_PDFFILEURL FOREIGN KEY (pdf_file_url_id) REFERENCES files (id);
+    ADD CONSTRAINT FK_EXAMS_ON_PDFFILEURL FOREIGN KEY (pdf_file_id) REFERENCES files (id);
 
 CREATE TABLE expand_contents
 (
