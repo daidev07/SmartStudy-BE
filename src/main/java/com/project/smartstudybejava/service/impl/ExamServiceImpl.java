@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -42,7 +43,7 @@ public class ExamServiceImpl implements ExamService {
 
         Exam exam = new Exam();
         exam.setName(examRequest.getExamName());
-        exam.setCreatedAt(LocalDate.now());
+        exam.setCreatedAt(LocalDateTime.now());
 
         FileInfo listenFileUrl = cloudinaryService.saveMp3File(examRequest.getListenMp3File());
         FileInfo pdfFileUrl = cloudinaryService.saveMp3File(examRequest.getListenPdfFile());
@@ -60,7 +61,7 @@ public class ExamServiceImpl implements ExamService {
 
         Exam exam = new Exam();
         exam.setName(examRequest.getExamName());
-        exam.setCreatedAt(LocalDate.now());
+        exam.setCreatedAt(LocalDateTime.now());
 
         FileInfo pdfFileUrl = cloudinaryService.saveMp3File(examRequest.getReadingPdfFile());
         exam.setExamType(EExamType.READING);
@@ -77,7 +78,7 @@ public class ExamServiceImpl implements ExamService {
 
         Exam exam = new Exam();
         exam.setName(examRequest.getExamName());
-        exam.setCreatedAt(LocalDate.now());
+        exam.setCreatedAt(LocalDateTime.now());
         exam.setExamType(EExamType.GRAMMAR);
         exam = examRepository.save(exam);
         importGrammarQuestionsFromExcel(exam, examRequest.getGrammarFile());
@@ -95,7 +96,22 @@ public class ExamServiceImpl implements ExamService {
         return examRepository.findById(examId).orElseThrow(() ->
                 new AppException(ErrorCode.EXAM_NOT_FOUND.getCode(), ErrorCode.EXAM_NOT_FOUND.getMessage()));
     }
-
+    public Exam updateExam(Long examId, ExamRequest examRequest) throws IOException {
+        Exam exam = examRepository.findById(examId).orElseThrow(() ->
+                new AppException(ErrorCode.EXAM_NOT_FOUND.getCode(), ErrorCode.EXAM_NOT_FOUND.getMessage()));
+        exam.setName(examRequest.getExamName());
+        exam.setCreatedAt(LocalDateTime.now());
+        if (exam.getExamType() == EExamType.LISTENING) {
+            FileInfo listenFileUrl = cloudinaryService.saveMp3File(examRequest.getListenMp3File());
+            FileInfo pdfFileUrl = cloudinaryService.saveMp3File(examRequest.getListenPdfFile());
+            exam.setListenFile(listenFileUrl);
+            exam.setPdfFile(pdfFileUrl);
+        } else if (exam.getExamType() == EExamType.READING) {
+            FileInfo pdfFileUrl = cloudinaryService.saveMp3File(examRequest.getReadingPdfFile());
+            exam.setPdfFile(pdfFileUrl);
+        }
+        return examRepository.save(exam);
+    }
     private void importListeningQuestionsFromExcel(Exam exam, MultipartFile file) throws IOException {
         InputStream inputStream = file.getInputStream();
         Workbook workbook = new XSSFWorkbook(inputStream);

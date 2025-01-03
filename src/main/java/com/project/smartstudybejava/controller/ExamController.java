@@ -36,6 +36,24 @@ public class ExamController {
                     .build();
         }
     }
+    @PutMapping("/{examId}")
+    public ResponseData<Exam> updateExam(@PathVariable Long examId, @ModelAttribute ExamRequest examRequest) {
+        try {
+            Exam exam = examService.updateExam(examId, examRequest);
+            return ResponseData.<Exam>builder()
+                    .code(SuccessCode.UPDATE_EXAM_SUCCESSFUL.getCode())
+                    .message(SuccessCode.UPDATE_EXAM_SUCCESSFUL.getMessage())
+                    .data(exam)
+                    .build();
+        } catch (IOException e) {
+            return ResponseData.<Exam>builder()
+                    .code(ErrorCode.UPDATE_EXAM_FAILED.getCode())
+                    .message(ErrorCode.UPDATE_EXAM_FAILED.getMessage())
+                    .build();
+        }
+    }
+
+
     @PostMapping("/reading")
     public ResponseData<Exam> createReadingExam(@ModelAttribute ExamRequest examRequest) {
         try {

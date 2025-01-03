@@ -49,7 +49,7 @@ CREATE TABLE exams
 (
     id                 BIGINT AUTO_INCREMENT NOT NULL,
     name               VARCHAR(255)          NULL,
-    created_at         date                  NULL,
+    created_at         datetime              NULL,
     listen_file_id VARCHAR(255)          NULL,
     pdf_file_id    VARCHAR(255)          NULL,
     exam_type          VARCHAR(255)          NULL,

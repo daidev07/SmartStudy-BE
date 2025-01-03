@@ -14,4 +14,5 @@ public interface ExamService {
     Exam createGrammarExam(ExamRequest examRequest) throws IOException;
     List<Exam> getAllExams();
     Exam getExamByExamId(Long examId);
+    Exam updateExam(Long examId, ExamRequest examRequest) throws IOException;
 }

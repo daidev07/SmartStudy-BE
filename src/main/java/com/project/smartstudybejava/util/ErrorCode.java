@@ -23,6 +23,9 @@ public enum ErrorCode {
     EXAM_EXISTED(400, "Exam existed", HttpStatus.BAD_REQUEST),
     EXAM_NOT_FOUND(404, "Exam not found", HttpStatus.NOT_FOUND),
     INVALID_EXAM_TYPE(412, "Invalid exam type", HttpStatus.BAD_REQUEST),
+    UPDATE_EXAM_FAILED(420, "Update exam failed", HttpStatus.BAD_REQUEST),
+    DELETE_EXAM_FAILED(421, "Delete exam failed", HttpStatus.BAD_REQUEST),
+
 
     ASSIGNMENT_NOT_FOUND(404, "Assignment not found", HttpStatus.NOT_FOUND),
     STUDENT_ASSIGNMENT_NOT_FOUND(404, "Student assignment not found", HttpStatus.NOT_FOUND),
