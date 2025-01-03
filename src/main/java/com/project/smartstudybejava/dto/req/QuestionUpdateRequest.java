@@ -8,19 +8,20 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 public class QuestionUpdateRequest {
     Long questionId;
+    Integer questionNumber;
     String questionContent;
     Long firstAnswerId;
     String firstAnswerContent;
-    boolean isCorrectFirst = false;
+    boolean correctFirst = false;
     Long secondAnswerId;
     String secondAnswerContent;
-    boolean isCorrectSecond = false;
+    boolean correctSecond = false;
     Long thirdAnswerId;
     String thirdAnswerContent;
-    boolean isCorrectThird = false;
+    boolean correctThird = false;
     Long fourthAnswerId;
     String fourthAnswerContent;
-    boolean isCorrectFourth = false;
+    boolean correctFourth = false;
     Long expandContentId;
     String expandContent;
 }

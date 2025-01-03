@@ -26,6 +26,7 @@ public enum ErrorCode {
     UPDATE_EXAM_FAILED(420, "Update exam failed", HttpStatus.BAD_REQUEST),
     DELETE_EXAM_FAILED(421, "Delete exam failed", HttpStatus.BAD_REQUEST),
 
+    GET_QUESTION_FAILED(442, "Get question failed", HttpStatus.BAD_REQUEST),
     UPDATE_QUESTION_FAILED(440, "Update question failed", HttpStatus.BAD_REQUEST),
     QUESTION_NOT_FOUND(404, "Question not found", HttpStatus.NOT_FOUND),
     MULTIPLE_CORRECT_ANSWERS(441, "One question don't have multi correct answer", HttpStatus.BAD_REQUEST),
