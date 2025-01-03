@@ -26,14 +26,16 @@ public enum ErrorCode {
     UPDATE_EXAM_FAILED(420, "Update exam failed", HttpStatus.BAD_REQUEST),
     DELETE_EXAM_FAILED(421, "Delete exam failed", HttpStatus.BAD_REQUEST),
 
+    UPDATE_QUESTION_FAILED(440, "Update question failed", HttpStatus.BAD_REQUEST),
+    QUESTION_NOT_FOUND(404, "Question not found", HttpStatus.NOT_FOUND),
+    MULTIPLE_CORRECT_ANSWERS(441, "One question don't have multi correct answer", HttpStatus.BAD_REQUEST),
+    ANSWER_NOT_FOUND(404, "Answer not found", HttpStatus.NOT_FOUND),
 
     ASSIGNMENT_NOT_FOUND(404, "Assignment not found", HttpStatus.NOT_FOUND),
     STUDENT_ASSIGNMENT_NOT_FOUND(404, "Student assignment not found", HttpStatus.NOT_FOUND),
     DUE_DATE_INVALID(410, "Due date invalid", HttpStatus.BAD_REQUEST),
     ASSIGNMENT_EXISTED(411, "Assignment existed", HttpStatus.BAD_REQUEST),
 
-    QUESTION_NOT_FOUND(404, "Question not found", HttpStatus.NOT_FOUND),
-    ANSWER_NOT_FOUND(404, "Answer not found", HttpStatus.NOT_FOUND),
 
     UNAUTHENTICATED(400, "Unauthenticated", HttpStatus.UNAUTHORIZED),
 

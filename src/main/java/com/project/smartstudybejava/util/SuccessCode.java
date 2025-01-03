@@ -29,6 +29,9 @@ public enum SuccessCode {
     UPDATE_EXAM_SUCCESSFUL(200, "Update exam successful" , HttpStatus.OK),
     DELETE_EXAM_SUCCESSFUL(200, "Delete exam successful" , HttpStatus.OK),
 
+    UPDATE_QUESTION_SUCCESSFUL(200, "Update question successful" , HttpStatus.OK),
+    DELETE_QUESTION_SUCCESSFUL(200, "Delete question successful" , HttpStatus.OK),
+
     GET_ASSIGNMENT_SUCCESSFUL(200, "Get assignment successful" , HttpStatus.OK),
     ASSIGN_SUCCESSFUL(201, "Assignment to classroom successful" , HttpStatus.CREATED),
 
