@@ -90,4 +90,12 @@ public class UserServiceImpl implements UserService {
                 .map(userMapper::toUserResponse)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<UserResDTO> getAllStudentByClassId(Long classId) {
+        List<User> students = userRepository.findAllByClassroomId(classId);
+        return students.stream()
+                .map(userMapper::toUserResponse)
+                .collect(Collectors.toList());
+    }
 }

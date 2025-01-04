@@ -61,4 +61,12 @@ public class UserController {
                 .data(userService.getAllAssistants())
                 .build();
     }
+    @GetMapping("/get-all-by-classId/{classId}")
+    public ResponseData<List<UserResDTO>> getAllStudentByClassId(@PathVariable Long classId) {
+        return ResponseData.<List<UserResDTO>>builder()
+                .code(SuccessCode.GET_ALL_STUDENTS_IN_CLASS_SUCCESSFUL.getCode())
+                .message(SuccessCode.GET_ALL_STUDENTS_IN_CLASS_SUCCESSFUL.getMessage())
+                .data(userService.getAllStudentByClassId(classId))
+                .build();
+    }
 }

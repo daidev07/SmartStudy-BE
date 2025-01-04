@@ -22,6 +22,7 @@ public enum SuccessCode {
     CREATE_CLASSROOM_SUCCESSFUL(201, "Created classroom successful" , HttpStatus.CREATED),
     GET_CLASSROOM_SUCCESSFUL(200, "Get classroom successful" , HttpStatus.OK),
     GET_ALL_CLASS_SUCCESSFUL(200, "Get all classroom successful" , HttpStatus.OK),
+    GET_ALL_STUDENTS_IN_CLASS_SUCCESSFUL(200, "Get all students in class successful" , HttpStatus.OK),
 
     GET_EXAM_SUCCESSFUL(200, "Get Exam Successful" , HttpStatus.OK),
     GET_ALL_EXAM_SUCCESSFUL(200, "Get all exam successful" , HttpStatus.OK),

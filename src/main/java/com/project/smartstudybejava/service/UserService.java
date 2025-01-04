@@ -11,4 +11,5 @@ public interface UserService {
     UserResDTO getUserByUsername(String userName);
     List<UserResDTO> getAllTeachers();
     List<UserResDTO> getAllAssistants();
+    List<UserResDTO> getAllStudentByClassId(Long classId);
 }
