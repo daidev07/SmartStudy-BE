@@ -38,9 +38,18 @@ public class NewsFeedController {
                 .data(newsFeed)
                 .build();
     }
-    @GetMapping
-    public ResponseData<List<NewsFeed>> getAllNewsFeed() {
-        List<NewsFeed> newsFeeds = newsFeedService.getAllNewsFeed();
+    @GetMapping("/permitted")
+    public ResponseData<List<NewsFeed>> getAllPermittedNewsFeed() {
+        List<NewsFeed> newsFeeds = newsFeedService.getAllPermittedNewsFeed();
+        return ResponseData.<List<NewsFeed>>builder()
+                .code(SuccessCode.GET_SUCCESSFUL.getCode())
+                .message(SuccessCode.GET_SUCCESSFUL.getMessage())
+                .data(newsFeeds)
+                .build();
+    }
+    @GetMapping("/not-permit")
+    public ResponseData<List<NewsFeed>> getAllNotPermitNewsFeed() {
+        List<NewsFeed> newsFeeds = newsFeedService.getAllNotPermitNewsFeed();
         return ResponseData.<List<NewsFeed>>builder()
                 .code(SuccessCode.GET_SUCCESSFUL.getCode())
                 .message(SuccessCode.GET_SUCCESSFUL.getMessage())
@@ -56,5 +65,21 @@ public class NewsFeedController {
                 .data(isPostByUser)
                 .build();
     }
-
+    @PutMapping("/permit-post/{postId}")
+    public ResponseData<NewsFeed> permitPost(@PathVariable Long postId) {
+        NewsFeed newsFeed = newsFeedService.permitPost(postId);
+        return ResponseData.<NewsFeed>builder()
+                .code(SuccessCode.PERMIT_POST_SUCCESSFUL.getCode())
+                .message(SuccessCode.PERMIT_POST_SUCCESSFUL.getMessage())
+                .data(newsFeed)
+                .build();
+    }
+    @DeleteMapping("/delete-post/{postId}")
+    public ResponseData<Void> deletePost(@PathVariable Long postId) {
+        newsFeedService.deletePost(postId);
+        return ResponseData.<Void>builder()
+                .code(SuccessCode.DELETE_POST_SUCCESSFUL.getCode())
+                .message(SuccessCode.DELETE_POST_SUCCESSFUL.getMessage())
+                .build();
+    }
 }

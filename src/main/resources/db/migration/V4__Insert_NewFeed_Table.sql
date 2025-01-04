@@ -6,6 +6,7 @@ CREATE TABLE newsfeeds
     posted_at    datetime              NULL,
     user_id      BIGINT                NULL,
     likes        BIGINT                NULL,
+    is_posted  BIT(1)                NOT NULL,
     CONSTRAINT pk_newsfeeds PRIMARY KEY (id)
 );
 

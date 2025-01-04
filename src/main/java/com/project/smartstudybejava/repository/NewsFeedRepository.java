@@ -8,5 +8,7 @@ import java.util.List;
 
 @Repository
 public interface NewsFeedRepository extends JpaRepository<NewsFeed, Long> {
+    List<NewsFeed> findAllByIsPostedTrue();
+    List<NewsFeed> findAllByIsPostedFalse();
     boolean existsByIdAndUserId(Long postId, Long userId);
 }

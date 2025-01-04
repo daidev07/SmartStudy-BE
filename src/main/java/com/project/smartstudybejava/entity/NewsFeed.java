@@ -28,4 +28,5 @@ public class NewsFeed {
     @ManyToOne
     User user;
     Long likes;
+    boolean isPosted;
 }

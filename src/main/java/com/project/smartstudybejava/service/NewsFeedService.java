@@ -7,6 +7,9 @@ import java.util.List;
 
 public interface NewsFeedService {
     NewsFeed postToAllClasses(String content, Long userId, FileInfo image);
-    List<NewsFeed> getAllNewsFeed();
+    List<NewsFeed> getAllPermittedNewsFeed();
+    List<NewsFeed> getAllNotPermitNewsFeed();
     boolean isPostByUser(Long postId, Long userId);
+    NewsFeed permitPost(Long postId);
+    void deletePost(Long postId);
 }
