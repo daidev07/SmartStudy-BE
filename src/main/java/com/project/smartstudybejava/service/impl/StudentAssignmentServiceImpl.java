@@ -22,6 +22,11 @@ public class StudentAssignmentServiceImpl implements StudentAssignmentService {
     UserRepository userRepository;
 
     @Override
+    public List<StudentAssignment> getAllAssignments() {
+        return studentAssignmentRepository.findAll();
+    }
+
+    @Override
     public List<StudentAssignment> getAssignmentByUserId(Long userId) {
         if (!userRepository.existsById(userId)) {
             throw new AppException(ErrorCode.USER_NOT_FOUND.getCode(), ErrorCode.USER_NOT_FOUND.getMessage());
