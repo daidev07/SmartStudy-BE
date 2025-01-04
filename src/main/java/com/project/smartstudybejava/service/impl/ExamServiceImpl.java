@@ -127,10 +127,14 @@ public class ExamServiceImpl implements ExamService {
             }
             int questionNumber = (int) questionNumberCell.getNumericCellValue();
             String questionContent = row.getCell(1) != null ? row.getCell(1).getStringCellValue() : "";
-            String answer1 = row.getCell(2).getStringCellValue();
-            String answer2 = row.getCell(3).getStringCellValue();
-            String answer3 = row.getCell(4).getStringCellValue();
-            String answer4 = row.getCell(5).getStringCellValue();
+            String answer1 = row.getCell(2).getCellType() == CellType.NUMERIC ?
+                    String.valueOf(row.getCell(2).getNumericCellValue()) : row.getCell(2).getStringCellValue();
+            String answer2 = row.getCell(3).getCellType() == CellType.NUMERIC ?
+                    String.valueOf(row.getCell(3).getNumericCellValue()) : row.getCell(3).getStringCellValue();
+            String answer3 = row.getCell(4).getCellType() == CellType.NUMERIC ?
+                    String.valueOf(row.getCell(4).getNumericCellValue()) : row.getCell(4).getStringCellValue();
+            String answer4 = row.getCell(5).getCellType() == CellType.NUMERIC ?
+                    String.valueOf(row.getCell(5).getNumericCellValue()) : row.getCell(5).getStringCellValue();
             int correctAnswerIndex = (int) row.getCell(6).getNumericCellValue();
 
             Question question = new Question();
@@ -167,8 +171,6 @@ public class ExamServiceImpl implements ExamService {
                     expandContentRepository.save(expandContent);
 
                     currentExpandContent = expandContent;
-                } else {
-                    currentExpandContent = null;
                 }
             }
             Cell questionNumberCell = row.getCell(0);
@@ -177,10 +179,14 @@ public class ExamServiceImpl implements ExamService {
             }
             int questionNumber = (int) row.getCell(0).getNumericCellValue();
             String questionContent = row.getCell(1) != null ? row.getCell(1).getStringCellValue() : "";
-            String answer1 = row.getCell(2).getStringCellValue();
-            String answer2 = row.getCell(3).getStringCellValue();
-            String answer3 = row.getCell(4).getStringCellValue();
-            String answer4 = row.getCell(5).getStringCellValue();
+            String answer1 = row.getCell(2).getCellType() == CellType.NUMERIC ?
+                    String.valueOf(row.getCell(2).getNumericCellValue()) : row.getCell(2).getStringCellValue();
+            String answer2 = row.getCell(3).getCellType() == CellType.NUMERIC ?
+                    String.valueOf(row.getCell(3).getNumericCellValue()) : row.getCell(3).getStringCellValue();
+            String answer3 = row.getCell(4).getCellType() == CellType.NUMERIC ?
+                    String.valueOf(row.getCell(4).getNumericCellValue()) : row.getCell(4).getStringCellValue();
+            String answer4 = row.getCell(5).getCellType() == CellType.NUMERIC ?
+                    String.valueOf(row.getCell(5).getNumericCellValue()) : row.getCell(5).getStringCellValue();
             int correctAnswerIndex = (int) row.getCell(6).getNumericCellValue();
 
             Question question = new Question();
@@ -216,10 +222,14 @@ public class ExamServiceImpl implements ExamService {
             }
             int questionNumber = (int) questionNumberCell.getNumericCellValue();
             String questionContent = row.getCell(1) != null ? row.getCell(1).getStringCellValue() : "";
-            String answer1 = row.getCell(2).getStringCellValue();
-            String answer2 = row.getCell(3).getStringCellValue();
-            String answer3 = row.getCell(4).getStringCellValue();
-            String answer4 = row.getCell(5).getStringCellValue();
+            String answer1 = row.getCell(2).getCellType() == CellType.NUMERIC ?
+                    String.valueOf(row.getCell(2).getNumericCellValue()) : row.getCell(2).getStringCellValue();
+            String answer2 = row.getCell(3).getCellType() == CellType.NUMERIC ?
+                    String.valueOf(row.getCell(3).getNumericCellValue()) : row.getCell(3).getStringCellValue();
+            String answer3 = row.getCell(4).getCellType() == CellType.NUMERIC ?
+                    String.valueOf(row.getCell(4).getNumericCellValue()) : row.getCell(4).getStringCellValue();
+            String answer4 = row.getCell(5).getCellType() == CellType.NUMERIC ?
+                    String.valueOf(row.getCell(5).getNumericCellValue()) : row.getCell(5).getStringCellValue();
             int correctAnswerIndex = (int) row.getCell(6).getNumericCellValue();
 
             Question question = new Question();
