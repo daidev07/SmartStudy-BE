@@ -16,6 +16,8 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -56,18 +58,20 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.deleteById(commentId);
     }
     @Override
-    public CommentResponse getAllCommentsByNewsFeedId(Long newsFeedId) {
-        Comment comment = commentRepository.findAllByNewsFeedId(newsFeedId);
-        return CommentResponse.builder()
-                .id(comment.getId())
-                .content(comment.getContent())
-                .createdAt(comment.getCreatedAt().toString())
-                .userResponse(UserResDTO.builder()
-                        .id(comment.getUser().getId())
-                        .name(comment.getUser().getName())
-                        .classroom(comment.getUser().getClassroom())
-                        .avatarUrl(comment.getUser().getAvatarFile())
+    public List<CommentResponse> getAllCommentsByNewsFeedId(Long newsFeedId) {
+        List<Comment> comments = commentRepository.findAllByNewsFeedId(newsFeedId);
+        return comments.stream()
+                .map(comment -> CommentResponse.builder()
+                        .id(comment.getId())
+                        .content(comment.getContent())
+                        .createdAt(comment.getCreatedAt().toString())
+                        .userResponse(UserResDTO.builder()
+                                .id(comment.getUser().getId())
+                                .name(comment.getUser().getName())
+                                .classroom(comment.getUser().getClassroom())
+                                .avatarUrl(comment.getUser().getAvatarFile())
+                                .build())
                         .build())
-                .build();
+                .collect(Collectors.toList());
     }
 }

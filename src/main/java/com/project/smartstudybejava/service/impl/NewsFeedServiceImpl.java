@@ -23,57 +23,24 @@ import java.util.List;
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE, makeFinal = true)
 public class NewsFeedServiceImpl implements NewsFeedService {
     NewsFeedRepository newsFeedRepository;
-    ClassroomRepository classroomRepository;
     UserRepository userRepository;
 
-    public NewsFeed postToClass(Long classId, String content, Long userId, FileInfo image) {
+    public NewsFeed postToAllClasses(String content, Long userId, FileInfo image) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND.getCode(),
                         ErrorCode.USER_NOT_FOUND.getMessage()));
 
-        Classroom classroom = classroomRepository.findById(classId)
-                .orElseThrow(() -> new AppException(ErrorCode.CLASSROOM_NOT_FOUND.getCode(),
-                        ErrorCode.CLASSROOM_NOT_FOUND.getMessage()));
-
-        NewsFeed newsFeed = new NewsFeed();
-        newsFeed.setContent(content);
-        newsFeed.setUser(user);
-        newsFeed.setClassroom(classroom);
-        if (image != null) {
-            newsFeed.setImageFile(image.getFileUrl());
-        }
-        newsFeed.setPostedAt(LocalDateTime.now());
-        newsFeed.setLikes(0L);
-
-        return newsFeedRepository.save(newsFeed);
-    }
-
-    public List<NewsFeed> postToAllClasses(String content, Long userId, FileInfo image) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND.getCode(),
-                        ErrorCode.USER_NOT_FOUND.getMessage()));
-
-        List<Classroom> classrooms = classroomRepository.findAll();
-        List<NewsFeed> feeds = new ArrayList<>();
-
-        for (Classroom classroom : classrooms) {
-            NewsFeed newsFeed = new NewsFeed();
-            newsFeed.setContent(content);
-            newsFeed.setUser(user);
-            newsFeed.setClassroom(classroom);
-            if (image != null) {
-                newsFeed.setImageFile(image.getFileUrl());
-            }
-            newsFeed.setPostedAt(LocalDateTime.now());
-            newsFeed.setLikes(0L);
-            feeds.add(newsFeedRepository.save(newsFeed));
-        }
-
-        return feeds;
+        NewsFeed feed = new NewsFeed();
+        feed.setContent(content);
+        feed.setImageFile(image != null ? image.getFileUrl() : null);
+        feed.setPostedAt(LocalDateTime.now());
+        feed.setUser(user);
+        feed.setLikes(0L);
+        return newsFeedRepository.save(feed);
     }
 
     @Override
-    public List<NewsFeed> getNewFeedsByClass(Long classId) {
-        return newsFeedRepository.findByClassroomId(classId);
+    public List<NewsFeed> getAllNewsFeed() {
+        return newsFeedRepository.findAll();
     }
 }

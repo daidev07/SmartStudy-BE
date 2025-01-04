@@ -27,7 +27,5 @@ public class NewsFeed {
     LocalDateTime postedAt;
     @ManyToOne
     User user;
-    @ManyToOne
-    Classroom classroom;
     Long likes;
 }

@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/comment")
@@ -35,16 +37,16 @@ public class CommentController {
         }
     }
     @GetMapping("/get-all-by-newsfeedId/{newsFeedId}")
-    public ResponseData<CommentResponse> getAllCommentsByNewsFeedId(@PathVariable Long newsFeedId) {
+    public ResponseData<List<CommentResponse>> getAllCommentsByNewsFeedId(@PathVariable Long newsFeedId) {
         try {
-            CommentResponse comments = commentService.getAllCommentsByNewsFeedId(newsFeedId);
-            return ResponseData.<CommentResponse>builder()
+            List<CommentResponse> comments = commentService.getAllCommentsByNewsFeedId(newsFeedId);
+            return ResponseData.<List<CommentResponse>>builder()
                     .code(SuccessCode.GET_COMMENT_SUCCESSFUL.getCode())
                     .message(SuccessCode.GET_COMMENT_SUCCESSFUL.getMessage())
                     .data(comments)
                     .build();
         } catch (Exception e) {
-            return ResponseData.<CommentResponse>builder()
+            return ResponseData.<List<CommentResponse>>builder()
                     .code(ErrorCode.GET_COMMENT_FAILED.getCode())
                     .message(ErrorCode.GET_COMMENT_FAILED.getMessage())
                     .build();

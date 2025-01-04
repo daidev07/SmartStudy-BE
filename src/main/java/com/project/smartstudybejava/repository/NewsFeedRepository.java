@@ -8,6 +8,4 @@ import java.util.List;
 
 @Repository
 public interface NewsFeedRepository extends JpaRepository<NewsFeed, Long> {
-
-    List<NewsFeed> findByClassroomId(Long classId);
 }

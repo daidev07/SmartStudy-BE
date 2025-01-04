@@ -21,9 +21,9 @@ import java.util.List;
 public class NewsFeedController {
     NewsFeedService newsFeedService;
     CloudinaryService cloudinaryService;
-    @PostMapping("/class/{classId}")
-    public ResponseData<NewsFeed> postToClass(
-            @PathVariable Long classId,
+
+    @PostMapping("/all")
+    public ResponseData<NewsFeed> postToAllClasses(
             @RequestParam String content,
             @RequestParam Long userId,
             @RequestParam(required = false) MultipartFile image) throws IOException {
@@ -31,34 +31,16 @@ public class NewsFeedController {
         if (image != null && !image.isEmpty()) {
             fileInfo = cloudinaryService.saveFile(image);
         }
-        NewsFeed newsFeed = newsFeedService.postToClass(classId, content, userId, fileInfo);
+        NewsFeed newsFeed = newsFeedService.postToAllClasses(content, userId, fileInfo);
         return ResponseData.<NewsFeed>builder()
                 .code(SuccessCode.POST_SUCCESSFUL.getCode())
                 .message(SuccessCode.POST_SUCCESSFUL.getMessage())
                 .data(newsFeed)
                 .build();
     }
-
-    @PostMapping("/all")
-    public ResponseData<List<NewsFeed>> postToAllClasses(
-            @RequestParam String content,
-            @RequestParam Long userId,
-            @RequestParam(required = false) MultipartFile image) throws IOException {
-        FileInfo fileInfo = null;
-        if (image != null && !image.isEmpty()) {
-            fileInfo = cloudinaryService.saveFile(image);
-        }
-        List<NewsFeed> newsFeeds = newsFeedService.postToAllClasses(content, userId, fileInfo);
-        return ResponseData.<List<NewsFeed>>builder()
-                .code(SuccessCode.POST_SUCCESSFUL.getCode())
-                .message(SuccessCode.POST_SUCCESSFUL.getMessage())
-                .data(newsFeeds)
-                .build();
-    }
-
-    @GetMapping("/class/{classId}")
-    public ResponseData<List<NewsFeed>> getNewFeedsByClass(@PathVariable Long classId) {
-        List<NewsFeed> newsFeeds = newsFeedService.getNewFeedsByClass(classId);
+    @GetMapping
+    public ResponseData<List<NewsFeed>> getAllNewsFeed() {
+        List<NewsFeed> newsFeeds = newsFeedService.getAllNewsFeed();
         return ResponseData.<List<NewsFeed>>builder()
                 .code(SuccessCode.GET_SUCCESSFUL.getCode())
                 .message(SuccessCode.GET_SUCCESSFUL.getMessage())
