@@ -18,7 +18,7 @@ public enum SuccessCode {
     GET_ALL_TEACHERS_SUCCESSFUL(200, "Get all teachers successful" , HttpStatus.OK),
     GET_ALL_ASSISTANTS_SUCCESSFUL(200, "Get all assistants successful" , HttpStatus.OK),
 
-
+    DELETE_CLASSROOM_SUCCESSFUL(200, "Delete classroom successful" , HttpStatus.OK),
     CREATE_CLASSROOM_SUCCESSFUL(201, "Created classroom successful" , HttpStatus.CREATED),
     GET_CLASSROOM_SUCCESSFUL(200, "Get classroom successful" , HttpStatus.OK),
     GET_ALL_CLASS_SUCCESSFUL(200, "Get all classroom successful" , HttpStatus.OK),

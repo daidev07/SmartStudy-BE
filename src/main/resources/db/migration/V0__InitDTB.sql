@@ -5,6 +5,7 @@ CREATE TABLE classrooms
 (
     id       BIGINT AUTO_INCREMENT NOT NULL,
     class_name     VARCHAR(255)          NULL,
+    class_status   VARCHAR(255)          NULL,
     CONSTRAINT pk_classrooms PRIMARY KEY (id)
 );
 

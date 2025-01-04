@@ -10,4 +10,5 @@ public interface ClassRoomService {
     List<Classroom> getAllClassroom();
     ClassroomResponse createClassroom(ClassroomRequest classroomRequest);
     Classroom getClassroomById(Long id);
+    Classroom deleteClassroom(Long id);
 }

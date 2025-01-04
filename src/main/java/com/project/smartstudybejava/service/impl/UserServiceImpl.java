@@ -5,6 +5,7 @@ import com.project.smartstudybejava.dto.res.UserResDTO;
 import com.project.smartstudybejava.entity.Classroom;
 import com.project.smartstudybejava.entity.User;
 import com.project.smartstudybejava.enumeration.ERole;
+import com.project.smartstudybejava.enumeration.EStudyStatus;
 import com.project.smartstudybejava.exception.AppException;
 import com.project.smartstudybejava.exception.ResourceNotFoundException;
 import com.project.smartstudybejava.mapper.UserMapper;
@@ -41,9 +42,10 @@ public class UserServiceImpl implements UserService {
             user.setRole(ERole.ASSISTANT);
         } else {
             user.setRole(ERole.STUDENT);
-            Classroom classroom = classroomRepository.findById(Long.valueOf(userCreationReqDTO.getClassroomId()))
+            Classroom classroom = classroomRepository.findById(userCreationReqDTO.getClassroomId())
                     .orElseThrow(() -> new ResourceNotFoundException("Classroom not found"));
             user.setClassroom(classroom);
+            user.setStudyStatus(EStudyStatus.IN_PROGRESS);
         }
 
         if(!user.getUsername().isEmpty()) {

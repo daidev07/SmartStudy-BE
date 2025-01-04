@@ -44,4 +44,12 @@ public class ClassController {
                 .data(classRoomService.createClassroom(classroomRequest))
                 .build();
     }
+    @DeleteMapping("/{classId}")
+    public ResponseData<Classroom> deleteClass(@PathVariable Long classId) {
+        return ResponseData.<Classroom>builder()
+                .code(SuccessCode.DELETE_CLASSROOM_SUCCESSFUL.getCode())
+                .message(SuccessCode.DELETE_CLASSROOM_SUCCESSFUL.getMessage())
+                .data(classRoomService.deleteClassroom(classId))
+                .build();
+    }
 }

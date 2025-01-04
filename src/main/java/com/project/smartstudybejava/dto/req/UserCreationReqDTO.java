@@ -19,7 +19,7 @@ public class UserCreationReqDTO {
     String phone;
     String username;
     String password;
-    String classroomId;
+    Long classroomId;
     EStudyStatus studyStatus;
     ERole role;
 }

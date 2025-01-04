@@ -1,6 +1,7 @@
 package com.project.smartstudybejava.entity;
 
 
+import com.project.smartstudybejava.enumeration.EClassStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -18,4 +19,6 @@ public class Classroom {
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     Long id;
     String className;
+    @Enumerated(EnumType.STRING)
+    EClassStatus classStatus;
 }
