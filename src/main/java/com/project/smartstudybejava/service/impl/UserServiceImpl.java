@@ -3,6 +3,7 @@ package com.project.smartstudybejava.service.impl;
 import com.project.smartstudybejava.dto.req.UserCreationReqDTO;
 import com.project.smartstudybejava.dto.res.UserResDTO;
 import com.project.smartstudybejava.entity.Classroom;
+import com.project.smartstudybejava.entity.FileInfo;
 import com.project.smartstudybejava.entity.User;
 import com.project.smartstudybejava.enumeration.ERole;
 import com.project.smartstudybejava.enumeration.EStudyStatus;
@@ -13,6 +14,7 @@ import com.project.smartstudybejava.repository.ClassroomRepository;
 import com.project.smartstudybejava.repository.UserRepository;
 import com.project.smartstudybejava.service.UserService;
 import com.project.smartstudybejava.util.ErrorCode;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -99,5 +101,15 @@ public class UserServiceImpl implements UserService {
         return students.stream()
                 .map(userMapper::toUserResponse)
                 .collect(Collectors.toList());
+    }
+    @Override
+    @Transactional
+    public UserResDTO updateAvatar(Long userId, FileInfo avatar) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND.getCode(),
+                        ErrorCode.USER_NOT_FOUND.getMessage()));
+        user.setAvatarFile(avatar.getFileUrl());
+        User updatedUser = userRepository.save(user);
+        return userMapper.toUserResponse(updatedUser);
     }
 }

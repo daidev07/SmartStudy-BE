@@ -19,7 +19,7 @@ public class UserResDTO {
     Long id;
     String name;
     String email;
-    String avatarUrl;
+    String avatarFile;
     String phone;
     String username;
     Classroom classroom;

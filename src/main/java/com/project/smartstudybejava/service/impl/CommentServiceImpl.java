@@ -49,7 +49,7 @@ public class CommentServiceImpl implements CommentService {
                         .id(comment.getUser().getId())
                         .name(comment.getUser().getName())
                         .classroom(comment.getUser().getClassroom())
-                        .avatarUrl(comment.getUser().getAvatarFile())
+                        .avatarFile(comment.getUser().getAvatarFile())
                         .build())
                 .build();
     }
@@ -69,7 +69,7 @@ public class CommentServiceImpl implements CommentService {
                                 .id(comment.getUser().getId())
                                 .name(comment.getUser().getName())
                                 .classroom(comment.getUser().getClassroom())
-                                .avatarUrl(comment.getUser().getAvatarFile())
+                                .avatarFile(comment.getUser().getAvatarFile())
                                 .build())
                         .build())
                 .collect(Collectors.toList());

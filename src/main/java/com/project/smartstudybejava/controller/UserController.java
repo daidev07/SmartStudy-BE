@@ -2,7 +2,9 @@ package com.project.smartstudybejava.controller;
 
 import com.project.smartstudybejava.dto.req.UserCreationReqDTO;
 import com.project.smartstudybejava.dto.res.UserResDTO;
+import com.project.smartstudybejava.entity.FileInfo;
 import com.project.smartstudybejava.entity.User;
+import com.project.smartstudybejava.service.CloudinaryService;
 import com.project.smartstudybejava.service.UserService;
 import com.project.smartstudybejava.util.ResponseData;
 import com.project.smartstudybejava.util.SuccessCode;
@@ -10,8 +12,10 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import retrofit2.http.Path;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -20,7 +24,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserController {
     UserService userService;
-
+    CloudinaryService cloudinaryService;
     @PostMapping
     public ResponseData<UserResDTO> createUser(@RequestBody UserCreationReqDTO userCreationReqDTO) {
         return ResponseData.<UserResDTO>builder()
@@ -67,6 +71,17 @@ public class UserController {
                 .code(SuccessCode.GET_ALL_STUDENTS_IN_CLASS_SUCCESSFUL.getCode())
                 .message(SuccessCode.GET_ALL_STUDENTS_IN_CLASS_SUCCESSFUL.getMessage())
                 .data(userService.getAllStudentByClassId(classId))
+                .build();
+    }
+    @PutMapping("/avatar/{userId}")
+    public ResponseData<UserResDTO> updateAvatar(@PathVariable Long userId, @RequestParam MultipartFile avatar)
+            throws IOException {
+        FileInfo fileInfo = cloudinaryService.saveFile(avatar);
+        UserResDTO updatedUser = userService.updateAvatar(userId, fileInfo);
+        return ResponseData.<UserResDTO>builder()
+                .code(SuccessCode.UPDATE_AVATAR_SUCCESSFUL.getCode())
+                .message(SuccessCode.UPDATE_AVATAR_SUCCESSFUL.getMessage())
+                .data(updatedUser)
                 .build();
     }
 }

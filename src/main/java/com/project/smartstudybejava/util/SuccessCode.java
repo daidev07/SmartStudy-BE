@@ -13,6 +13,7 @@ public enum SuccessCode {
     GET_SUCCESSFUL(200, "Get Successful" , HttpStatus.OK),
 
     USER_CREATED_SUCCESSFUL(201, "User created successful" , HttpStatus.CREATED),
+    UPDATE_AVATAR_SUCCESSFUL(200, "Update avatar successful" , HttpStatus.OK),
     GET_USER_SUCCESSFUL(200, "Get user successful" , HttpStatus.OK),
     GET_ALL_USER_SUCCESSFUL(200, "Get all user successful" , HttpStatus.OK),
     GET_ALL_TEACHERS_SUCCESSFUL(200, "Get all teachers successful" , HttpStatus.OK),
