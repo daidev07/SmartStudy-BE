@@ -43,6 +43,10 @@ public enum SuccessCode {
     CREATE_REPORT_SUCCESSFUL(201, "Create report successful" , HttpStatus.CREATED),
 
     GET_HISTORY_CHATBOT_SUCCESSFUL(200, "Get history chatbot successful" , HttpStatus.OK),
+
+    POST_COMMENT_SUCCESSFUL(201, "Post comment successful" , HttpStatus.CREATED),
+    GET_COMMENT_SUCCESSFUL(200, "Get comment successful" , HttpStatus.OK),
+    DELETE_COMMENT_SUCCESSFUL(200, "Delete comment successful" , HttpStatus.OK),
     ;
 
     int code;

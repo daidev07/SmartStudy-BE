@@ -42,6 +42,10 @@ public enum ErrorCode {
 
     HISTORY_CHATBOT_NOT_FOUND(404, "History chatbot for this user not found", HttpStatus.NOT_FOUND),
 
+    NEWSFEED_NOT_FOUND(404, "Newsfeed not found", HttpStatus.NOT_FOUND),
+    POST_COMMENT_FAILED(450, "Post comment failed", HttpStatus.BAD_REQUEST),
+    GET_COMMENT_FAILED(451, "Get comment failed", HttpStatus.BAD_REQUEST),
+    DELETE_COMMENT_FAILED(452, "Delete comment failed", HttpStatus.BAD_REQUEST),
     ;
     int code;
     String message;
