@@ -8,4 +8,5 @@ import java.util.List;
 
 @Repository
 public interface NewsFeedRepository extends JpaRepository<NewsFeed, Long> {
+    boolean existsByIdAndUserId(Long postId, Long userId);
 }

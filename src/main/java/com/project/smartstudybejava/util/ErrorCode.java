@@ -45,6 +45,8 @@ public enum ErrorCode {
     NEWSFEED_NOT_FOUND(404, "Newsfeed not found", HttpStatus.NOT_FOUND),
     POST_COMMENT_FAILED(450, "Post comment failed", HttpStatus.BAD_REQUEST),
     GET_COMMENT_FAILED(451, "Get comment failed", HttpStatus.BAD_REQUEST),
+    COMMENT_NOT_FOUND(404, "Comment not found", HttpStatus.NOT_FOUND),
+    NOT_COMMENT_BY_USER(453, "Not comment by user", HttpStatus.BAD_REQUEST),
     DELETE_COMMENT_FAILED(452, "Delete comment failed", HttpStatus.BAD_REQUEST),
     ;
     int code;

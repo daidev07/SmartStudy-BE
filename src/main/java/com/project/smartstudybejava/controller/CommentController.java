@@ -67,4 +67,13 @@ public class CommentController {
                     .build();
         }
     }
+    @GetMapping("/is-comment-by-user")
+    public ResponseData<Boolean> isCommentByUser(@RequestParam Long commentId, @RequestParam Long userId) {
+        boolean isCommentByUser = commentService.isCommentByUser(commentId, userId);
+        return ResponseData.<Boolean>builder()
+                .code(SuccessCode.IS_COMMENT_BY_USER.getCode())
+                .message(SuccessCode.IS_COMMENT_BY_USER.getMessage())
+                .data(isCommentByUser)
+                .build();
+    }
 }

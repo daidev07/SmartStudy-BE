@@ -8,4 +8,5 @@ import java.util.List;
 public interface NewsFeedService {
     NewsFeed postToAllClasses(String content, Long userId, FileInfo image);
     List<NewsFeed> getAllNewsFeed();
+    boolean isPostByUser(Long postId, Long userId);
 }

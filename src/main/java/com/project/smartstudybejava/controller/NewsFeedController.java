@@ -47,4 +47,14 @@ public class NewsFeedController {
                 .data(newsFeeds)
                 .build();
     }
+    @GetMapping("/is-post-by-user")
+    public ResponseData<Boolean> isPostByUser(@RequestParam Long postId, @RequestParam Long userId) {
+        boolean isPostByUser = newsFeedService.isPostByUser(postId, userId);
+        return ResponseData.<Boolean>builder()
+                .code(SuccessCode.IS_POST_BY_USER.getCode())
+                .message(SuccessCode.IS_POST_BY_USER.getMessage())
+                .data(isPostByUser)
+                .build();
+    }
+
 }

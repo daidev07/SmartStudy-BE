@@ -74,4 +74,11 @@ public class CommentServiceImpl implements CommentService {
                         .build())
                 .collect(Collectors.toList());
     }
+    @Override
+    public boolean isCommentByUser(Long commentId, Long userId) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new AppException(ErrorCode.COMMENT_NOT_FOUND.getCode(),
+                        ErrorCode.COMMENT_NOT_FOUND.getMessage()));
+        return comment.getUser().getId().equals(userId);
+    }
 }

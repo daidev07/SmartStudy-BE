@@ -43,4 +43,9 @@ public class NewsFeedServiceImpl implements NewsFeedService {
     public List<NewsFeed> getAllNewsFeed() {
         return newsFeedRepository.findAll();
     }
+
+    @Override
+    public boolean isPostByUser(Long postId, Long userId) {
+        return newsFeedRepository.existsByIdAndUserId(postId, userId);
+    }
 }

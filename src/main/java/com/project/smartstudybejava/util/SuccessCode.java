@@ -44,8 +44,10 @@ public enum SuccessCode {
 
     GET_HISTORY_CHATBOT_SUCCESSFUL(200, "Get history chatbot successful" , HttpStatus.OK),
 
+    IS_POST_BY_USER(200, "Is post by user successful" , HttpStatus.OK),
     POST_COMMENT_SUCCESSFUL(201, "Post comment successful" , HttpStatus.CREATED),
     GET_COMMENT_SUCCESSFUL(200, "Get comment successful" , HttpStatus.OK),
+    IS_COMMENT_BY_USER(200, "Is comment by user successful" , HttpStatus.OK),
     DELETE_COMMENT_SUCCESSFUL(200, "Delete comment successful" , HttpStatus.OK),
     ;
 
